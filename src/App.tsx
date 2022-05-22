@@ -39,16 +39,16 @@ const App = () => {
         setTasks([newTask, ...tasks])
         // const copyState =[newTask, ...tasks]
     }
-    const changeTaskStatus =(tasksID:string,isDone:boolean  )=>{
-        setTasks(tasks.map(t=> t.id === tasksID ? {...t, isDone} : t))//isDone:isDone
-       /* const updatedTastks = tasks.map(t=> {
-            if(t.id === tasksID) {
-                return {...t, isDone: !t.isDone}
-            } else  {
-                return t
-            }
-        })
-        setTasks(updatedTastks)*/
+    const changeTaskStatus = (tasksID: string, isDone: boolean) => {
+        setTasks(tasks.map(t => t.id === tasksID ? {...t, isDone} : t))//isDone:isDone
+        /* const updatedTastks = tasks.map(t=> {
+             if(t.id === tasksID) {
+                 return {...t, isDone: !t.isDone}
+             } else  {
+                 return t
+             }
+         })
+         setTasks(updatedTastks)*/
 
 
     }
