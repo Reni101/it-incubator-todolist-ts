@@ -101,6 +101,7 @@ const TodoList = (props: TodoListPropsType) => {
                     className={buttonClassCompleted}
                     onClick={() => props.changeFilter("completed")}>Completed
                 </button>
+                <div>Privet</div>
             </div>
         </div>
     );
