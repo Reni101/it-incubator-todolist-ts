@@ -3,13 +3,15 @@ import {FilterValuesType, TaskType} from "./App"
 
 
 type TodoListPropsType = {
+    todoListID:string
     title: string
     tasks: Array<TaskType> //Tasktype []
     filter: FilterValuesType
-    RemoveTask: (taskID: string) => void
-    changeFilter: (filter: FilterValuesType) => void
-    addTask: (title: string) => void
-    changeTaskStatus: (tasksID: string, isDone: boolean) => void
+    RemoveTask: (todoListID: string,taskID: string) => void
+    changeFilter: (todoListID: string,filter: FilterValuesType) => void
+    addTask: (todoListID: string,title: string) => void
+    changeTaskStatus: (todoListID: string,tasksID: string, isDone: boolean) => void
+    removeTodolist:(todoListID: string)=>void
 
 }
 
@@ -17,19 +19,13 @@ const TodoList = (props: TodoListPropsType) => {
     const [title, setTitle] = useState<string>("")
     const [error, setError] = useState<boolean>(false)
 
-    let tasksForRender = props.tasks
-    if (props.filter === 'active') {
-        tasksForRender = props.tasks.filter(t => !t.isDone)
-    }
-    if (props.filter === 'completed') {
-        tasksForRender = props.tasks.filter(t => t.isDone)
-    }
 
-    const tasksMap = tasksForRender.length
-        ? tasksForRender.map((t) => {
-            const removeTask = () => props.RemoveTask(t.id)
+
+    const tasksMap = props.tasks.length
+        ? props.tasks.map((t) => {
+            const removeTask = () => props.RemoveTask(props.todoListID,t.id)
             const ChangeTaskHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                props.changeTaskStatus(t.id, e.currentTarget.checked)
+                props.changeTaskStatus(props.todoListID,t.id, e.currentTarget.checked)
             }
             const taskClasses = t.isDone ? "is-done" : "";
             return (<li key={t.id}>
@@ -47,7 +43,7 @@ const TodoList = (props: TodoListPropsType) => {
     const addTasksHandler = () => {
         let taskTitle: string = title.trim();
         if (taskTitle) {
-            props.addTask(taskTitle)
+            props.addTask(props.todoListID, taskTitle)
         } else {
             setError(true)
         }
@@ -64,14 +60,18 @@ const TodoList = (props: TodoListPropsType) => {
     const pressEnter = (e: KeyboardEvent<HTMLInputElement>) => {
         e.key === "Enter" && addTasksHandler() // &&- И при нажати и тру и она запускаеть функцию
     }
+    const onClickRemoveTodoListHandler = () => {
+        props.removeTodolist(props.todoListID)
+
+    }
 
     const buttonClassALL = props.filter === 'all' ? "active-filter" : ""
     const buttonClassActive = props.filter === 'active' ? "active-filter" : ""
     const buttonClassCompleted = props.filter === 'completed' ? "active-filter" : ""
-    const errorInputStyle = error? {border:"2px solid red", outline:"none"} : undefined
+    const errorInputStyle = error ? {border: "2px solid red", outline: "none"} : undefined
     return (
         <div>
-            <h3>{props.title}</h3>
+            <h3>{props.title} <button onClick={onClickRemoveTodoListHandler}>x</button> </h3>
             <div>
                 <input
                     style={errorInputStyle}
@@ -91,17 +91,17 @@ const TodoList = (props: TodoListPropsType) => {
             <div>
                 <button
                     className={buttonClassALL}
-                    onClick={() => props.changeFilter("all")}>All
+                    onClick={() => props.changeFilter(props.todoListID,"all")}>All
                 </button>
                 <button
                     className={buttonClassActive}
-                    onClick={() => props.changeFilter("active")}>Active
+                    onClick={() => props.changeFilter(props.todoListID,"active")}>Active
                 </button>
                 <button
                     className={buttonClassCompleted}
-                    onClick={() => props.changeFilter("completed")}>Completed
+                    onClick={() => props.changeFilter(props.todoListID,"completed")}>Completed
                 </button>
-                <div>Privet</div>
+
             </div>
         </div>
     );
