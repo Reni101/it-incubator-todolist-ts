@@ -1,5 +1,7 @@
 import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
 import {FilterValuesType, TaskType} from "./App"
+import {AddItemForm} from "./components/AddItemForm";
+import {EditableSpan} from "./components/EditableSpan";
 
 
 type TodoListPropsType = {
@@ -12,27 +14,29 @@ type TodoListPropsType = {
     addTask: (todoListID: string,title: string) => void
     changeTaskStatus: (todoListID: string,tasksID: string, isDone: boolean) => void
     removeTodolist:(todoListID: string)=>void
+    editTodolist:(toDoListID: string, newTitle: string) => void
+    editTask:(toDoListID: string,taskId:string, newTitle: string)=>void
 
 }
 
 const TodoList = (props: TodoListPropsType) => {
-    const [title, setTitle] = useState<string>("")
-    const [error, setError] = useState<boolean>(false)
-
-
 
     const tasksMap = props.tasks.length
         ? props.tasks.map((t) => {
+            const editTasktHandler=(newTitle:string)=> {
+                props.editTask(props.todoListID,t.id,newTitle)
+            }
             const removeTask = () => props.RemoveTask(props.todoListID,t.id)
             const ChangeTaskHandler = (e: ChangeEvent<HTMLInputElement>) => {
                 props.changeTaskStatus(props.todoListID,t.id, e.currentTarget.checked)
             }
-            const taskClasses = t.isDone ? "is-done" : "";
+
             return (<li key={t.id}>
                 <input type="checkbox"
                        checked={t.isDone}
                        onChange={ChangeTaskHandler}/>
-                <span className={taskClasses}>{t.title}</span>
+                <EditableSpan isDone={t.isDone} title={t.title} callBack={editTasktHandler}/>
+
                 <button onClick={removeTask}>x</button>
 
             </li>)
@@ -40,53 +44,34 @@ const TodoList = (props: TodoListPropsType) => {
         : <span>empty</span>
 
 
-    const addTasksHandler = () => {
-        let taskTitle: string = title.trim();
-        if (taskTitle) {
-            props.addTask(props.todoListID, taskTitle)
-        } else {
-            setError(true)
-        }
+    const addTaskHandler =(title:string)=>{
+        props.addTask(props.todoListID,title)
+    }
 
-        setTitle("")
-    }
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
-        if (error && e.currentTarget.value.trim()) {
-            setError(false)
-        }
-
-    }
-    const pressEnter = (e: KeyboardEvent<HTMLInputElement>) => {
-        e.key === "Enter" && addTasksHandler() // &&- И при нажати и тру и она запускаеть функцию
-    }
     const onClickRemoveTodoListHandler = () => {
         props.removeTodolist(props.todoListID)
 
     }
+    const editTodolistHandler=(newTitle:string)=> {
+        props.editTodolist(props.todoListID,newTitle)
+    }
+
+
 
     const buttonClassALL = props.filter === 'all' ? "active-filter" : ""
     const buttonClassActive = props.filter === 'active' ? "active-filter" : ""
     const buttonClassCompleted = props.filter === 'completed' ? "active-filter" : ""
-    const errorInputStyle = error ? {border: "2px solid red", outline: "none"} : undefined
     return (
         <div>
-            <h3>{props.title} <button onClick={onClickRemoveTodoListHandler}>x</button> </h3>
-            <div>
-                <input
-                    style={errorInputStyle}
-                    value={title}
-                    onChange={onChangeHandler}
-                    onKeyDown={pressEnter} //e.key === "Enter" && addTasksHandler()  (e)=>{if(e.key === 'Enter')addTasksHandler()}
-                />
+            <h3>
 
-                <button onClick={addTasksHandler}>+</button>
-                {error && <div style={{color: "red"}}>Title is required!</div>}
-            </div>
-
-            <ol>
+                <EditableSpan title={props.title} callBack={editTodolistHandler}/>
+                <button onClick={onClickRemoveTodoListHandler}>x</button>
+            </h3>
+            <AddItemForm  callBack={addTaskHandler}/>
+            <ul>
                 {tasksMap}
-            </ol>
+            </ul>
 
             <div>
                 <button
