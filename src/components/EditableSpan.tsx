@@ -1,5 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {log} from "util";
+import {TextField} from "@mui/material";
 
 type EditableSpanPropsType = {
     title: string
@@ -43,13 +44,19 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
 
     return (
         edit
-            ? <input
-                onChange={onChangeHandler}
-                onBlur={EditTrueHAndler}
-                autoFocus type="text"
-                onKeyDown={pressEnter}
-                value={newTitle}/>
-            : <span className={taskClasses}
+            ? <TextField id="standard-basic"
+                         label="Редактировать текст"
+                         variant="standard"
+                         onChange={onChangeHandler}
+                         onBlur={EditTrueHAndler}
+                         autoFocus type="text"
+                         onKeyDown={pressEnter}
+                         value={newTitle}
+                         size="small"
+                         style={{margin:"6px",}}
+            />
+
+            : <span className={taskClasses} style={{fontSize:"20px"}}
                     onDoubleClick={EditTrueHAndler}> {props.title}
                 {error && <div style={{color: "red"}}>Title is required!</div>}
             </span>

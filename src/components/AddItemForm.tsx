@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {Button} from "@mui/material";
+import {Button, TextField} from "@mui/material";
 
 
 type AddItemFormPropsType = {
@@ -39,17 +39,27 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
 
 
         <div>
-            <input
-                style={errorInputStyle}
-                value={title}
-                onChange={onChangeHandler}
-                onKeyDown={pressEnter} //e.key === "Enter" && addTasksHandler()  (e)=>{if(e.key === 'Enter')addTasksHandler()}
+            <TextField id="outlined-basic"
+                       label={error ? "Title is required!" : "Введите текст"}
+                       variant="outlined"
+                       value={title}
+                       onChange={onChangeHandler}
+                       onKeyDown={pressEnter}
+                       error={!!error}
+                       size='small'
+
             />
+
             <Button variant="contained"
                     onClick={TaskTestHandler}
-                    style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}
+                    style={{
+                        maxWidth: '38px',
+                        maxHeight: '38px',
+                        minWidth: '38px',
+                        minHeight: '38px',
+                        marginLeft: "5px"
+                    }}
             >+</Button>
-            {error && <div style={{color: "red"}}>Title is required!</div>}
         </div>
     );
 };
