@@ -2,6 +2,8 @@ import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
 import {FilterValuesType, TaskType} from "./App"
 import {AddItemForm} from "./components/AddItemForm";
 import {EditableSpan} from "./components/EditableSpan";
+import {Button, IconButton} from "@mui/material";
+import {Delete} from "@mui/icons-material";
 
 
 type TodoListPropsType = {
@@ -31,7 +33,7 @@ const TodoList = (props: TodoListPropsType) => {
                 props.changeTaskStatus(props.todoListID,t.id, e.currentTarget.checked)
             }
 
-            return (<li key={t.id}>
+            return (<div key={t.id}>
                 <input type="checkbox"
                        checked={t.isDone}
                        onChange={ChangeTaskHandler}/>
@@ -39,7 +41,7 @@ const TodoList = (props: TodoListPropsType) => {
 
                 <button onClick={removeTask}>x</button>
 
-            </li>)
+            </div>)
         })
         : <span>empty</span>
 
@@ -66,15 +68,25 @@ const TodoList = (props: TodoListPropsType) => {
             <h3>
 
                 <EditableSpan title={props.title} callBack={editTodolistHandler}/>
-                <button onClick={onClickRemoveTodoListHandler}>x</button>
+                <IconButton aria-label="delete">
+                    <Delete onClick={onClickRemoveTodoListHandler} />
+                </IconButton>
+
             </h3>
             <AddItemForm  callBack={addTaskHandler}/>
-            <ul>
+            <div>
                 {tasksMap}
-            </ul>
+            </div>
 
             <div>
-                <button
+                <Button variant={props.filter === "all" ? "outlined" : "contained"} onClick={() => props.changeFilter(props.todoListID,"all")}>All</Button>
+                <Button variant={props.filter === "active" ? "outlined" : "contained"} onClick={() => props.changeFilter(props.todoListID,"active")}>Active</Button>
+                <Button variant={props.filter === "completed" ? "outlined" : "contained"} onClick={() => props.changeFilter(props.todoListID,"completed")}>Completed</Button>
+
+
+
+
+     {/*           <button
                     className={buttonClassALL}
                     onClick={() => props.changeFilter(props.todoListID,"all")}>All
                 </button>
@@ -85,7 +97,7 @@ const TodoList = (props: TodoListPropsType) => {
                 <button
                     className={buttonClassCompleted}
                     onClick={() => props.changeFilter(props.todoListID,"completed")}>Completed
-                </button>
+                </button>*/}
 
             </div>
         </div>
