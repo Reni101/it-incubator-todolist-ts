@@ -112,7 +112,7 @@ const App = () => {
                         }
 
 
-                        return (<Grid item>
+                        return (<Grid item key={el.id}>
                                 <Paper style={{padding: "10px"}}>
                                     <TodoList
                                         key={el.id}
