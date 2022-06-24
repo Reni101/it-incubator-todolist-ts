@@ -26,7 +26,7 @@ const App = () => {
     let todolistID1 = v1();
     let todolistID2 = v1();
 
-    let [toDolists, setToDolists] = useState<Array<TodolistsType>>([
+    let [todoLists, setTodoLists] = useState<Array<TodolistsType>>([
         {id: todolistID1, title: 'What to learn Front', filter: 'all'},
         {id: todolistID2, title: 'What to learn Back', filter: 'all'},
     ])
@@ -54,7 +54,7 @@ const App = () => {
         //  setTasks(tasks.filter((t) => t.id !== tasksID));
     }
     const changeFilter = (todoListID: string, filter: FilterValuesType) => {
-        setToDolists(toDolists.map(el => el.id === todoListID ? {...el, filter} : el))
+        setTodoLists(todoLists.map(el => el.id === todoListID ? {...el, filter} : el))
     }
 
     const addTask = (todoListID: string, title: string) => {
@@ -72,17 +72,18 @@ const App = () => {
     }
 
     const removeTodolist = (todoListID: string) => {
-        setToDolists(toDolists.filter(el => el.id !== todoListID))
+        setTodoLists(todoLists.filter(el => el.id !== todoListID))
+        delete tasks[todoListID];
 
     }
     const addTodoList = (title: string) => {
         const newId = v1();
         let newTodolist: TodolistsType = {id: newId, title, filter: "all"}
-        setToDolists([newTodolist, ...toDolists])
+        setTodoLists([newTodolist, ...todoLists])
         setTasks({...tasks, [newId]: [{id: v1(), title: "New Task", isDone: false},]})
     }
     const editTodolist = (toDoListID: string, newTitle: string) => {
-        setToDolists(toDolists.map(el => el.id === toDoListID ? {...el, title: newTitle} : el))
+        setTodoLists(todoLists.map(el => el.id === toDoListID ? {...el, title: newTitle} : el))
     }
     const editTask = (toDoListID: string, taskId: string, newTitle: string) => {
         setTasks({
@@ -96,12 +97,12 @@ const App = () => {
         <div className="App">
             <ButtonAppBar/>
             <Container fixed>
-                <Grid container style={{paddingTop:'10px'}}>
+                <Grid container style={{paddingTop: '10px'}}>
                     <span>Add todoList </span>-
                     <AddItemForm callBack={addTodoList}/>
                 </Grid>
                 <Grid container spacing={3}>
-                    {toDolists.map((el) => {
+                    {todoLists.map((el) => {
 
                         let tasksForRender = tasks[el.id]
                         if (el.filter === 'active') {
@@ -134,11 +135,11 @@ const App = () => {
                         )
 
                     })
-                        }
-                        </Grid>
-                        </Container>
-                        </div>
-                        );
                     }
+                </Grid>
+            </Container>
+        </div>
+    );
+}
 
-                    export default App;
+export default App;
