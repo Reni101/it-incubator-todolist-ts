@@ -59,7 +59,7 @@ export const AddItemForm = memo( (props: AddItemFormPropsType) => {
                         minHeight: '38px',
                         marginLeft: "5px"
                     }}
-            >+</Button>
+            >+!</Button>
         </div>
     );
 });
