@@ -6,7 +6,7 @@ import {TaskType} from "../App";
 
 
 export default {
-    title: 'Todolist/AddItemForm',
+    title: 'Todolist/Task',
     component: Task,
     argTypes: {
         onClick: {
@@ -19,7 +19,7 @@ const Template: ComponentStory<typeof Task> = (args) => <Task {...args} />;
 
 export const TaskPropsType = Template.bind({});
 TaskPropsType.args = {
-    task: {id: "1", title: "String", isDone: false},
+    task: {id: "1", title: "String", isDone: true},
     RemoveTask: action("RemoveTask"),
     changeTaskStatus: action("changeTaskStatus"),
     editTask: action("editTask"),
