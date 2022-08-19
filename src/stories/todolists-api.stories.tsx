@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import axios from "axios";
-
-
+import {daDK} from "@mui/material/locale";
 
 export default {
     title: 'API'
@@ -19,26 +18,27 @@ export const GetTodolists = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
         axios.get('todo-lists', setting)
-            .then(res=>{setState(res.data)})
-
+            .then(res => setState(res.data))
     }, [])
     return <div>{JSON.stringify(state)}</div>
 }
 export const CreateTodolist = () => {
-    const title = ""
+    const title = "New todoList homework"
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-
+        axios.post('todo-lists', {title}, setting)
+            .then(res => setState(res.data.data.item))
     }, [])
 
     return <div>{JSON.stringify(state)}</div>
 }
 
 export const DeleteTodolist = () => {
-    const todolistID = "fd5cf896-ad57-47bc-9c6d-1eebd674d311"
+    const todolistID = "acf6f671-3706-40e5-b09e-243de556bdea"
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-
+        axios.delete(`todo-lists/${todolistID}`, setting)
+            .then(res => setState(res.data.data))
     }, [])
 
     return <div>{JSON.stringify(state)}</div>
