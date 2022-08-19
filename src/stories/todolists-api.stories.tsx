@@ -34,7 +34,7 @@ export const CreateTodolist = () => {
 }
 
 export const DeleteTodolist = () => {
-    const todolistID = "acf6f671-3706-40e5-b09e-243de556bdea"
+    const todolistID = "a47938cc-1c9d-469b-b0d4-ece57e2c253c"
     const [state, setState] = useState<any>(null)
     useEffect(() => {
         axios.delete(`todo-lists/${todolistID}`, setting)
@@ -45,10 +45,12 @@ export const DeleteTodolist = () => {
 }
 
 export const UpdateTodolistTitle = () => {
-    const title = ""
-    const todolistID = "fd5cf896-ad57-47bc-9c6d-1eebd674d311"
+    const title = "Hello Server"
+    const todolistID = "1c89a8f9-4c6a-4558-b6fd-0b8cb749abda"
     const [state, setState] = useState<any>(null)
     useEffect(() => {
+        axios.put(`todo-lists/${todolistID}`, {title}, setting)
+            .then(res => setState(res.data.data))
 
     }, [])
 
