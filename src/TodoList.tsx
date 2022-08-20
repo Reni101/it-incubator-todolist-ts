@@ -1,11 +1,10 @@
-import React, {ChangeEvent, useState, KeyboardEvent, useCallback} from 'react';
-import {FilterValuesType, TaskType} from "./App"
+import React, {useCallback} from 'react';
 import {AddItemForm} from "./components/AddItemForm";
 import {EditableSpan} from "./components/EditableSpan";
-import {Button, Checkbox, IconButton} from "@mui/material";
+import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import Task from "./components/Task";
-
+import {FilterValuesType, TaskType} from "./AppWithRedux";
 
 type TodoListPropsType = {
     todoListID: string
@@ -38,7 +37,7 @@ const TodoList = (props: TodoListPropsType) => {
     const removeTask = useCallback((taskId: string) => props.RemoveTask(props.todoListID, taskId), [props.RemoveTask, props.todoListID])
     const ChangeTaskHandler = useCallback((taskId: string, status: boolean) => {
         props.changeTaskStatus(props.todoListID, taskId, status)
-    }, [ props.changeTaskStatus,props.todoListID])
+    }, [props.changeTaskStatus, props.todoListID])
 
 
     const tasksMap = props.tasks.length

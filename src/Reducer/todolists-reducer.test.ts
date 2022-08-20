@@ -1,11 +1,11 @@
 import {v1} from 'uuid'
-import {FilterValuesType, TodolistsType} from "../App";
 import {addTodoListAC, changeFilterAC, editTodoListAc, removeTodolistAC, todoListsReducer} from "./todolists-reducer";
+import {FilterValuesType, TodoListsType} from "../AppWithRedux";
 
 let todolistId1: string
 let todolistId2: string
 
-let startState: Array<TodolistsType>;
+let startState: Array<TodoListsType>;
 
 beforeEach(() => {
     todolistId1 = v1()

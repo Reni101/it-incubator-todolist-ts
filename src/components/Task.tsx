@@ -2,7 +2,8 @@ import React, {ChangeEvent, memo} from 'react';
 import {Checkbox, IconButton} from "@mui/material";
 import {EditableSpan} from "./EditableSpan";
 import {Delete} from "@mui/icons-material";
-import {TaskType} from "../App";
+import {TaskType} from "../AppWithRedux";
+
 
 
 type TaskPropsType = {

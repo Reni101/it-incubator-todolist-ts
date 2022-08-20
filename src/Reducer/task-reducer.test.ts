@@ -1,6 +1,6 @@
 import React from 'react';
-import {TasksType} from "../App";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./task-reducer";
+import {TasksType} from "../AppWithRedux";
 
 
 let startState: TasksType;

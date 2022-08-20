@@ -16,7 +16,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./Reducer/store";
 
 export type TaskType = {
-    id: string, title: string, isDone: boolean
+    id: string,
+    title: string,
+    isDone: boolean
 }
 
 
