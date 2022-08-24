@@ -28,6 +28,15 @@ export type TaskType = {
     addedDate: string;
 }
 
+export type modelType = {
+    title: string
+    description: string
+    status: number
+    priority: number
+    startDate: string
+    deadline: string
+}
+
 export type ResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
@@ -63,8 +72,8 @@ export const todolistAPI = {
     deleteTask(todolistID: string, taskId: string) {
         return instane.delete<ResponseType>(`/todo-lists/${todolistID}/tasks/${taskId}`)
     },
-    updateTaskTitle(todolistID: string, taskId: string, task: any) {
-        return instane.put(`/todo-lists/${todolistID}/tasks/${taskId}`, {...task})
+    updateTask(todolistID: string, taskId: string, model: modelType) {
+        return instane.put<ResponseType<{item:TaskType}>>(`/todo-lists/${todolistID}/tasks/${taskId}`, model)
     },
 
 }
