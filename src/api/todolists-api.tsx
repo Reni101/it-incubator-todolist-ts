@@ -35,11 +35,20 @@ export type ResponseType<D = {}> = {
     data: D
 }
 
-export interface ResponseTaskType<T> {
+export type ResponseTaskType = {
     totalCount: number;
     error: string;
-    items: T;
+    items: Array<TaskType>;
 }
+export type ResponseTask<T = {}> = {
+	data: T;
+	messages: string[];
+	fieldsErrors: string[];  //?
+	resultCode: number;
+}
+
+
+
 
 
 export const todolistAPI = {
@@ -56,10 +65,13 @@ export const todolistAPI = {
         return instane.put<ResponseType>(`todo-lists/${todolistID}`, {title})
     },
     getTasks(todolistID: string) {
-        return instane.get<ResponseTaskType<Array<TaskType>>>(`todo-lists/${todolistID}/tasks`)
+        return instane.get<ResponseTaskType>(`todo-lists/${todolistID}/tasks`)
     },
     addTaskForTodolist(todolistID: string, titleTask: string) {
-        return instane.post(`todo-lists/${todolistID}/tasks`, {title: titleTask})
+        return instane.post<ResponseTask<{ item: TaskType }>>(`todo-lists/${todolistID}/tasks`, {title: titleTask})
+    },
+    deleteTask(todolistID: string,taskId:string) {
+        return instane.delete<ResponseTask>(`/todo-lists/${todolistID}/tasks/${taskId}`)
     },
 
 }
