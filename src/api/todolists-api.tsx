@@ -28,7 +28,7 @@ export type TaskType = {
     addedDate: string;
 }
 
-export type ResponseTodolistType<D = {}> = {
+export type ResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
     fieldsErrors: Array<string>
@@ -40,35 +40,28 @@ export type GetTaskResponseType = {
     error: string | null;
     items: Array<TaskType>;
 }
-export type ResponseTask<T = {}> = {
-    data: T;
-    messages: string[];
-    fieldsErrors: string[];  //?
-    resultCode: number;
-}
-
 
 export const todolistAPI = {
     getTodolists() {
         return instane.get<TodolistType[]>('todo-lists')
     },
     createTodolist(title: string) {
-        return instane.post<ResponseTodolistType<{ item: TodolistType }>>('todo-lists', {title})
+        return instane.post<ResponseType<{ item: TodolistType }>>('todo-lists', {title})
     },
     deleteTodolist(todolistID: string) {
-        return instane.delete<ResponseTodolistType>(`todo-lists/${todolistID}`)
+        return instane.delete<ResponseType>(`todo-lists/${todolistID}`)
     },
     updateTodolistTitle(todolistID: string, title: string) {
-        return instane.put<ResponseTodolistType>(`todo-lists/${todolistID}`, {title})
+        return instane.put<ResponseType>(`todo-lists/${todolistID}`, {title})
     },
     getTasks(todolistID: string) {
         return instane.get<GetTaskResponseType>(`todo-lists/${todolistID}/tasks`)
     },
     addTaskForTodolist(todolistID: string, titleTask: string) {
-        return instane.post<ResponseTask<{ item: TaskType }>>(`todo-lists/${todolistID}/tasks`, {title: titleTask})
+        return instane.post<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistID}/tasks`, {title: titleTask})
     },
     deleteTask(todolistID: string, taskId: string) {
-        return instane.delete<ResponseTask>(`/todo-lists/${todolistID}/tasks/${taskId}`)
+        return instane.delete<ResponseType>(`/todo-lists/${todolistID}/tasks/${taskId}`)
     },
     updateTaskTitle(todolistID: string, taskId: string, task: any) {
         return instane.put(`/todo-lists/${todolistID}/tasks/${taskId}`, {...task})
