@@ -15,11 +15,30 @@ export type TodolistType = {
     title: string
 }
 
+export type TaskType = {
+    id: string;
+    title: string;
+    description: string;
+    todoListId: string;
+    order: number;
+    status: number;
+    priority: number;
+    startDate: string;
+    deadline: string;
+    addedDate: string;
+}
+
 export type ResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
     fieldsErrors: Array<string>
     data: D
+}
+
+export interface ResponseTaskType<T> {
+    totalCount: number;
+    error: string;
+    items: T;
 }
 
 
@@ -36,8 +55,11 @@ export const todolistAPI = {
     updateTodolistTitle(todolistID: string, title: string) {
         return instane.put<ResponseType>(`todo-lists/${todolistID}`, {title})
     },
-    getTasks(todolistID: string,taskID:string) {
-        return instane.get('todo-lists')
+    getTasks(todolistID: string) {
+        return instane.get<ResponseTaskType<Array<TaskType>>>(`todo-lists/${todolistID}/tasks`)
+    },
+    addTaskForTodolist(todolistID: string, titleTask: string) {
+        return instane.post(`todo-lists/${todolistID}/tasks`, {title: titleTask})
     },
 
 }
