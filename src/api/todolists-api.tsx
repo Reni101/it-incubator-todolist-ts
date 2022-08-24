@@ -73,5 +73,8 @@ export const todolistAPI = {
     deleteTask(todolistID: string,taskId:string) {
         return instane.delete<ResponseTask>(`/todo-lists/${todolistID}/tasks/${taskId}`)
     },
+    updateTaskTitle(todolistID: string,taskId:string, task:any) {
+        return instane.put(`/todo-lists/${todolistID}/tasks/${taskId}`, {...task})
+    },
 
 }
