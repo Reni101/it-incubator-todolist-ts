@@ -1,10 +1,11 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {TextField} from "@mui/material";
+import {TaskStatuses} from "../api/todolists-api";
 
 type EditableSpanPropsType = {
     title: string
     callBack: (newTitle: string) => void
-    isDone?: boolean
+    status?:TaskStatuses
 }
 
 
@@ -39,7 +40,7 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
             setError(true)
         }
     }
-    const taskClasses = props.isDone ? "is-done" : "";
+    const taskClasses = props.status === 2 ? "is-done" : "";
 
     return (
         edit

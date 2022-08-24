@@ -1,15 +1,14 @@
-import React, {ChangeEvent, memo} from 'react';
+import React, {memo} from 'react';
 import {Checkbox, IconButton} from "@mui/material";
 import {EditableSpan} from "./EditableSpan";
 import {Delete} from "@mui/icons-material";
-import {TaskType} from "../AppWithRedux";
-
+import {TaskStatuses, TaskType} from "../api/todolists-api";
 
 
 type TaskPropsType = {
     task: TaskType
     RemoveTask: (taskId: string) => void
-    changeTaskStatus: (taskId: string, status: boolean) => void
+    changeTaskStatus: (taskId: string, status: TaskStatuses) => void
     editTask: (taskId: string, newTitle: string) => void
 }
 
@@ -25,19 +24,20 @@ const Task = memo(({
         editTask(task.id, newTitle)
     }
     const removeTask = () => RemoveTask(task.id)
-    const ChangeTaskHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        changeTaskStatus(task.id, e.currentTarget.checked)
+    const ChangeTaskHandler = () => {
+        changeTaskStatus(task.id,
+            task.status === TaskStatuses.Completed ? TaskStatuses.New : TaskStatuses.Completed)
     }
 
     return (
         <div>
             <Checkbox defaultChecked
-                      checked={task.isDone}
+                      checked={task.status === TaskStatuses.Completed}
                       onChange={ChangeTaskHandler}
 
             />
 
-            <EditableSpan isDone={task.isDone} title={task.title} callBack={editTasktHandler}/>
+            <EditableSpan status={task.status} title={task.title} callBack={editTasktHandler}/>
 
             <IconButton aria-label="delete">
                 <Delete onClick={removeTask}/>

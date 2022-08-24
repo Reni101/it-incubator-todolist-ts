@@ -6,14 +6,11 @@ type AddItemFormPropsType = {
     callBack: (title: string) => void
 }
 
-export const AddItemForm = memo( (props: AddItemFormPropsType) => {
+export const AddItemForm = memo((props: AddItemFormPropsType) => {
 
 
     const [title, setTitle] = useState<string>("")
     const [error, setError] = useState<boolean>(false)
-
-
-
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
@@ -45,7 +42,7 @@ export const AddItemForm = memo( (props: AddItemFormPropsType) => {
                        value={title}
                        onChange={onChangeHandler}
                        onKeyDown={pressEnter}
-                       error={!!error}
+                       error={error}
                        size='small'
 
             />
@@ -59,7 +56,7 @@ export const AddItemForm = memo( (props: AddItemFormPropsType) => {
                         minHeight: '38px',
                         marginLeft: "5px"
                     }}
-            >+!</Button>
+            >+</Button>
         </div>
     );
 });

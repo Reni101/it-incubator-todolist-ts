@@ -8,6 +8,21 @@ const instane = axios.create({
     }
 })
 
+export enum TaskStatuses {
+    New = 0,
+    InProgress = 1,
+    Completed = 2,
+    Draft = 3,
+}
+
+export enum TaskPriorities {
+    Low = 0,
+    Middle = 1,
+    Hi = 2,
+    Urgently = 3,
+    Later = 4,
+}
+
 export type TodolistType = {
     id: string
     addedDate: string
@@ -21,8 +36,8 @@ export type TaskType = {
     description: string;
     todoListId: string;
     order: number;
-    status: number;
-    priority: number;
+    status: TaskStatuses;
+    priority: TaskPriorities;
     startDate: string;
     deadline: string;
     addedDate: string;
@@ -73,7 +88,7 @@ export const todolistAPI = {
         return instane.delete<ResponseType>(`/todo-lists/${todolistID}/tasks/${taskId}`)
     },
     updateTask(todolistID: string, taskId: string, model: modelType) {
-        return instane.put<ResponseType<{item:TaskType}>>(`/todo-lists/${todolistID}/tasks/${taskId}`, model)
+        return instane.put<ResponseType<{ item: TaskType }>>(`/todo-lists/${todolistID}/tasks/${taskId}`, model)
     },
 
 }

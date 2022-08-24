@@ -4,17 +4,18 @@ import {EditableSpan} from "./components/EditableSpan";
 import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import Task from "./components/Task";
-import {FilterValuesType, TaskType} from "./AppWithRedux";
+import {TaskStatuses, TaskType} from "./api/todolists-api";
+import {FilterValuesType} from "./Reducer/todolists-reducer";
 
 type TodoListPropsType = {
     todoListID: string
     title: string
-    tasks: Array<TaskType> //Tasktype []
+    tasks: Array<TaskType>
     filter: FilterValuesType
     RemoveTask: (todoListID: string, taskID: string) => void
     changeFilter: (todoListID: string, filter: FilterValuesType) => void
     addTask: (todoListID: string, title: string) => void
-    changeTaskStatus: (todoListID: string, tasksID: string, isDone: boolean) => void
+    changeTaskStatus: (todoListID: string, tasksID: string, status: TaskStatuses) => void
     removeTodolist: (todoListID: string) => void
     editTodolist: (toDoListID: string, newTitle: string) => void
     editTask: (toDoListID: string, taskId: string, newTitle: string) => void
@@ -25,17 +26,17 @@ const TodoList = (props: TodoListPropsType) => {
 
     let tasksForRender = props.tasks
     if (props.filter === 'active') {
-        tasksForRender = props.tasks.filter(t => !t.isDone)
+        tasksForRender = props.tasks.filter(t => t.status === TaskStatuses.New)
     }
     if (props.filter === 'completed') {
-        tasksForRender = props.tasks.filter(t => t.isDone)
+        tasksForRender = props.tasks.filter(t => t.status === TaskStatuses.Completed)
     }
 
     const editTasktHandler = useCallback((taskId: string, newTitle: string) => {
         props.editTask(props.todoListID, taskId, newTitle)
     }, [props.editTask, props.todoListID])
     const removeTask = useCallback((taskId: string) => props.RemoveTask(props.todoListID, taskId), [props.RemoveTask, props.todoListID])
-    const ChangeTaskHandler = useCallback((taskId: string, status: boolean) => {
+    const ChangeTaskHandler = useCallback((taskId: string, status: TaskStatuses) => {
         props.changeTaskStatus(props.todoListID, taskId, status)
     }, [props.changeTaskStatus, props.todoListID])
 
@@ -73,7 +74,7 @@ const TodoList = (props: TodoListPropsType) => {
         <div>
             <h3>
 
-                <EditableSpan title={props.title} callBack={editTodolistHandler}/>
+                <EditableSpan title={props.title} callBack={editTodolistHandler} />
                 <IconButton aria-label="delete">
                     <Delete onClick={onClickRemoveTodoListHandler}/>
                 </IconButton>
