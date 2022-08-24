@@ -8,7 +8,7 @@ const instane = axios.create({
     }
 })
 
-type TodolistType = {
+export type TodolistType = {
     id: string
     addedDate: string
     order: number
@@ -35,5 +35,9 @@ export const todolistAPI = {
     },
     updateTodolistTitle(todolistID: string, title: string) {
         return instane.put<ResponseType>(`todo-lists/${todolistID}`, {title})
-    }
+    },
+    getTasks(todolistID: string,taskID:string) {
+        return instane.get('todo-lists')
+    },
+
 }
