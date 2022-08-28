@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {addTodoListACType, removeTodolistACType} from "./todolists-reducer";
+import {addTodoListACType, removeTodolistACType, setTodoListACType} from "./todolists-reducer";
 import {TasksType} from "../AppWithRedux";
 import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolists-api";
 
@@ -12,6 +12,7 @@ type AllActions = removeTaskACType
     | addTaskACType | changeTaskStatusACType
     | changeTaskTitleACType | addTodoListACType
     | removeTodolistACType
+    | setTodoListACType
 
 
 const initialState: TasksType = {}
@@ -59,6 +60,11 @@ export const tasksReducer = (state = initialState, action: AllActions): TasksTyp
             delete stateCopy[action.payload.id]
             return stateCopy
         }
+        case "SET-TODOLIST": {
+            const copyState = {...state};
+            action.todoLists.forEach(tl => copyState[tl.id] = [])
+            return copyState
+        }
 
 
         default:
@@ -82,7 +88,7 @@ export const addTaskAC = (title: string, todolistId: string) => {
         todolistId,
     } as const
 }
-export const changeTaskStatusAC = (taskId: string, status:TaskStatuses, todolistId: string) => {
+export const changeTaskStatusAC = (taskId: string, status: TaskStatuses, todolistId: string) => {
     return {
         type: "CHANGE-TASK-STATUS",
         taskId,

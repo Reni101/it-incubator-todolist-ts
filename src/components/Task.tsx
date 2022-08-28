@@ -2,7 +2,7 @@ import React, {memo} from 'react';
 import {Checkbox, IconButton} from "@mui/material";
 import {EditableSpan} from "./EditableSpan";
 import {Delete} from "@mui/icons-material";
-import {TaskStatuses, TaskType} from "../api/todolists-api";
+import {TaskStatuses, TaskType,} from "../api/todolists-api";
 
 
 type TaskPropsType = {
@@ -39,8 +39,8 @@ const Task = memo(({
 
             <EditableSpan status={task.status} title={task.title} callBack={editTasktHandler}/>
 
-            <IconButton aria-label="delete">
-                <Delete onClick={removeTask}/>
+            <IconButton aria-label="delete"  onClick={removeTask}>
+                <Delete/>
             </IconButton>
 
         </div>
