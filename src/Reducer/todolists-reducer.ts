@@ -95,11 +95,9 @@ export const setTodoListAC = (todoLists: Array<TodolistType>) => {
 
 //=======================Thunk async await ==============
 
-export const setTodoListThunk = (dispatch: Dispatch<AllActions>) => {
-    todolistAPI.getTodolists()
-        .then(res => {
-            dispatch(setTodoListAC(res.data))
-        })
+export const setTodoListTC =()=> async (dispatch: Dispatch<AllActions>) => {
+    const res = await todolistAPI.getTodolists()
+    dispatch(setTodoListAC(res.data))
 }
 
 

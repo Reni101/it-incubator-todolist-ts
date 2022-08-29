@@ -8,7 +8,7 @@ import {
     addTodoListAC,
     changeFilterAC,
     editTodoListAc, FilterValuesType,
-    removeTodolistAC, setTodoListThunk, TodolistDomainType,
+    removeTodolistAC, setTodoListTC, TodolistDomainType,
 
 } from "./Reducer/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./Reducer/task-reducer";
@@ -62,9 +62,11 @@ const AppWithRedux = () => {
     }, [dispatch])
 
     useEffect(() => {
-        dispatch(setTodoListThunk)
 
-    }, [dispatch])
+        // @ts-ignore
+        dispatch(setTodoListTC())
+
+    }, [])
 
     return (
         <div className="App">

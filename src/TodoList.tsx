@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {memo, useCallback, useEffect} from 'react';
 import {AddItemForm} from "./components/AddItemForm";
 import {EditableSpan} from "./components/EditableSpan";
 import {Button, IconButton} from "@mui/material";
@@ -6,6 +6,8 @@ import {Delete} from "@mui/icons-material";
 import Task from "./components/Task";
 import {TaskStatuses, TaskType} from "./api/todolists-api";
 import {FilterValuesType} from "./Reducer/todolists-reducer";
+import {useDispatch} from "react-redux";
+import {setTasksTC} from "./Reducer/task-reducer";
 
 type TodoListPropsType = {
     todoListID: string
@@ -22,7 +24,12 @@ type TodoListPropsType = {
 
 }
 
-const TodoList = (props: TodoListPropsType) => {
+const TodoList = memo((props: TodoListPropsType) => {
+    const dispatch = useDispatch()
+    useEffect(() => {
+        // @ts-ignore
+        dispatch(setTasksTC(props.todoListID))
+    }, [])
 
     let tasksForRender = props.tasks
     if (props.filter === 'active') {
@@ -74,9 +81,9 @@ const TodoList = (props: TodoListPropsType) => {
         <div>
             <h3>
 
-                <EditableSpan title={props.title} callBack={editTodolistHandler} />
-                <IconButton aria-label="delete">
-                    <Delete onClick={onClickRemoveTodoListHandler}/>
+                <EditableSpan title={props.title} callBack={editTodolistHandler}/>
+                <IconButton aria-label="delete" onClick={onClickRemoveTodoListHandler}>
+                    <Delete/>
                 </IconButton>
 
             </h3>
@@ -95,6 +102,6 @@ const TodoList = (props: TodoListPropsType) => {
             </div>
         </div>
     );
-};
+});
 
 export default TodoList;
