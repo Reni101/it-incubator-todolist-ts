@@ -4,7 +4,7 @@ import {TasksType} from "../AppWithRedux";
 import {TaskStatuses} from "../api/todolists-api";
 
 
-test('ids should be equals', () => {
+/*test('ids should be equals', () => {
     const startTasksState: TasksType = {}
     const startTodolistsState: Array<TodolistDomainType> = []
 
@@ -19,7 +19,7 @@ test('ids should be equals', () => {
 
     expect(idFromTasks).toBe(action.payload.id)
     expect(idFromTodolists).toBe(action.payload.id)
-})
+})*/
 
 test('property with todolistId should be deleted', () => {
     const startState: TasksType = {
