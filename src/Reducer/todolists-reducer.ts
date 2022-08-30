@@ -27,7 +27,6 @@ export const todoListsReducer = (state = initialState, action: AllActions): Arra
             return state.filter(el => el.id !== action.payload.id)
         }
         case AddTodoList: {
-
             let newTodolist: TodolistDomainType = {
                 id: action.payload.id,
                 title: action.payload.title, filter: "all", addedDate: "",
