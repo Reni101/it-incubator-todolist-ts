@@ -9,8 +9,8 @@ const AddTodoList = 'ADD-TODOLIST'
 export type AllTodolistsActions =
     | removeTodolistACType
     | addTodoListACType
-    | editTodoListAcType
-    | changeFilterACType
+    | ReturnType<typeof editTodoListAc>
+    | ReturnType<typeof changeFilterAC>
     | setTodoListACType
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
@@ -57,6 +57,7 @@ export const removeTodolistAC = (id: string) => {
         payload: {id}
     } as const
 }
+
 export type addTodoListACType = ReturnType<typeof addTodoListAC>
 export const addTodoListAC = (newTodolist: TodolistType) => {
     return {
@@ -65,20 +66,7 @@ export const addTodoListAC = (newTodolist: TodolistType) => {
     } as const
 
 }
-type editTodoListAcType = ReturnType<typeof editTodoListAc>
-export const editTodoListAc = (id: string, title: string) => {
-    return {
-        type: 'CHANGE-TODOLIST-TITLE',
-        payload: {id, title}
-    } as const
-}
-type changeFilterACType = ReturnType<typeof changeFilterAC>
-export const changeFilterAC = (id: string, filter: FilterValuesType) => {
-    return {
-        type: 'CHANGE-TODOLIST-FILTER',
-        payload: {id, filter}
-    } as const
-}
+
 export type setTodoListACType = ReturnType<typeof setTodoListAC>
 export const setTodoListAC = (todoLists: Array<TodolistType>) => {
     return {
@@ -86,6 +74,23 @@ export const setTodoListAC = (todoLists: Array<TodolistType>) => {
         todoLists,
     } as const
 }
+
+
+export const editTodoListAc = (id: string, title: string) => {
+    return {
+        type: 'CHANGE-TODOLIST-TITLE',
+        payload: {id, title}
+    } as const
+}
+
+export const changeFilterAC = (id: string, filter: FilterValuesType) => {
+    return {
+        type: 'CHANGE-TODOLIST-FILTER',
+        payload: {id, filter}
+    } as const
+}
+
+
 
 //=======================Thunk async await =========================
 

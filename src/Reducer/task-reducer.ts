@@ -4,18 +4,12 @@ import {TaskStatuses, TaskType, todolistAPI} from "../api/todolists-api";
 import {AppRootStateType, AppThunk} from "./store";
 import {addTodoListACType, removeTodolistACType, setTodoListACType} from "./todolists-reducer";
 
-type removeTaskACType = ReturnType<typeof removeTaskAC>
-type addTaskACType = ReturnType<typeof addTaskAC>
-type changeTaskStatusACType = ReturnType<typeof changeTaskStatusAC>
-type changeTaskTitleACType = ReturnType<typeof changeTaskTitleAC>
-type setTaskACType = ReturnType<typeof setTaskAC>
-
 export type AllTasksActions =
-    | removeTaskACType
-    | addTaskACType
-    | changeTaskStatusACType
-    | changeTaskTitleACType
-    | setTaskACType
+    | ReturnType<typeof removeTaskAC>
+    | ReturnType<typeof addTaskAC>
+    | ReturnType<typeof changeTaskStatusAC>
+    | ReturnType<typeof changeTaskTitleAC>
+    | ReturnType<typeof setTaskAC>
     | addTodoListACType
     | removeTodolistACType
     | setTodoListACType
@@ -140,6 +134,7 @@ export const removeTaskTC = (todolistId: string, taskId: string): AppThunk =>
 
         }
     }
+
 export const addTaskTC = (todolistId: string, title: string): AppThunk =>
     async dispatch => {
         try {
@@ -149,6 +144,7 @@ export const addTaskTC = (todolistId: string, title: string): AppThunk =>
 
         }
     }
+
 export const updateTaskStatusTC = (taskId: string, todolistId: string, status: TaskStatuses): AppThunk =>
     async (dispatch,
            getState: () => AppRootStateType) => {
