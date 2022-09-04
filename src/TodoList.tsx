@@ -6,8 +6,9 @@ import {Delete} from "@mui/icons-material";
 import Task from "./components/Task";
 import {TaskStatuses, TaskType} from "./api/todolists-api";
 import {FilterValuesType} from "./Reducer/todolists-reducer";
-import {useDispatch} from "react-redux";
+
 import {setTasksTC} from "./Reducer/task-reducer";
+import {useAppDispatch} from "./hooks/hooks";
 
 type TodoListPropsType = {
     todoListID: string
@@ -25,9 +26,8 @@ type TodoListPropsType = {
 }
 
 const TodoList = memo((props: TodoListPropsType) => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     useEffect(() => {
-        // @ts-ignore
         dispatch(setTasksTC(props.todoListID))
     }, [])
 
