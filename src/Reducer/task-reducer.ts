@@ -115,73 +115,79 @@ export const setTaskAC = (tasks: Array<TaskType>, todoListId: string) => {
         todoListId,
     } as const
 }
-//================================= TC =============================
-export const setTasksTC = (todolistId: string): AppThunk =>
-    (dispatch) => {
-        todolistAPI.getTasks(todolistId)
-            .then(res => {
-                    dispatch(setTaskAC(res.data.items, todolistId))
-                }
-            )
 
+
+//================================= TC =============================
+
+
+export const setTasksTC = (todolistId: string): AppThunk =>
+    async dispatch => {
+        try {
+            const res = await todolistAPI.getTasks(todolistId)
+            dispatch(setTaskAC(res.data.items, todolistId))
+
+        } catch (e) {
+
+        }
     }
 
 export const removeTaskTC = (todolistId: string, taskId: string): AppThunk =>
-    (dispatch) => {
-        todolistAPI.deleteTask(todolistId, taskId)
-            .then(res => {
-                dispatch(removeTaskAC(taskId, todolistId))
-            })
+    async dispatch => {
+        try {
+            await todolistAPI.deleteTask(todolistId, taskId)
+            dispatch(removeTaskAC(taskId, todolistId))
+        } catch (e) {
 
+        }
     }
 export const addTaskTC = (todolistId: string, title: string): AppThunk =>
-    (dispatch) => {
-        todolistAPI.addTaskForTodolist(todolistId, title)
-            .then(res => {
-                dispatch(addTaskAC(res.data.data.item))
-            })
+    async dispatch => {
+        try {
+            const res = await todolistAPI.addTaskForTodolist(todolistId, title)
+            dispatch(addTaskAC(res.data.data.item))
+        } catch (e) {
 
+        }
     }
 export const updateTaskStatusTC = (taskId: string, todolistId: string, status: TaskStatuses): AppThunk =>
-    (dispatch,
-     getState: () => AppRootStateType) => {
-        const task = getState().task[todolistId].find(t => t.id === taskId)
-
-        if (task) {
-            todolistAPI.updateTask(todolistId, taskId, {
-                title: task.title,
-                status: status,
-                deadline: task.deadline,
-                description: task.description,
-                priority: task.priority,
-                startDate: task.startDate,
-
-            })
-                .then(() => {
-                    dispatch(changeTaskStatusAC(taskId, status, todolistId))
+    async (dispatch,
+           getState: () => AppRootStateType) => {
+        try {
+            const task = getState().task[todolistId].find(t => t.id === taskId)
+            if (!!task) {
+                await todolistAPI.updateTask(todolistId, taskId, {
+                    title: task.title,
+                    status: status,
+                    deadline: task.deadline,
+                    description: task.description,
+                    priority: task.priority,
+                    startDate: task.startDate,
                 })
-        }
+                dispatch(changeTaskStatusAC(taskId, status, todolistId))
+            }
+        } catch (e) {
 
+        }
     }
 
 export const updateTaskTitleTC = (taskId: string, todolistId: string, title: string): AppThunk =>
-    (dispatch,
-     getState: () => AppRootStateType) => {
-        const task = getState().task[todolistId].find(t => t.id === taskId)
+    async (dispatch,
+           getState: () => AppRootStateType) => {
+        try {
+            const task = getState().task[todolistId].find(t => t.id === taskId)
+            if (task) {
+                await todolistAPI.updateTask(todolistId, taskId, {
+                    title,
+                    status: task.status,
+                    deadline: task.deadline,
+                    description: task.description,
+                    priority: task.priority,
+                    startDate: task.startDate,
 
-        if (task) {
-            todolistAPI.updateTask(todolistId, taskId, {
-                title,
-                status: task.status,
-                deadline: task.deadline,
-                description: task.description,
-                priority: task.priority,
-                startDate: task.startDate,
-
-            })
-                .then(() => {
-                    dispatch(changeTaskTitleAC(taskId, title, todolistId))
                 })
-        }
+                dispatch(changeTaskTitleAC(taskId, title, todolistId))
+            }
+        } catch (e) {
 
+        }
     }

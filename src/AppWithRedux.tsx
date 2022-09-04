@@ -23,18 +23,14 @@ export type TasksType = {
 }
 
 const AppWithRedux = () => {
-
-
     const todoLists: Array<TodolistDomainType> = useAppSelector(state => state.todolists)
     const task: TasksType = useAppSelector(state => state.task)
     const dispatch = useAppDispatch() //fixed any
 
 
     useEffect(() => {
-
         dispatch(setTodoListTC())
-
-    }, [])
+    }, [dispatch])
 
 
     const removeTask = useCallback((todoListID: string, tasksID: string) => {
