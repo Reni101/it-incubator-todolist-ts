@@ -1,5 +1,6 @@
 import {todolistAPI, TodolistType} from "../api/todolists-api";
 import {AppThunk} from "./store";
+import {setAppStatusAC} from "./app-reducer";
 
 
 const RemoveTodoList = 'REMOVE-TODOLIST'
@@ -96,8 +97,10 @@ export const changeFilterAC = (id: string, filter: FilterValuesType) => {
 
 export const setTodoListTC = (): AppThunk => async dispatch => {
     try {
+        dispatch(setAppStatusAC("loading"))
         const res = await todolistAPI.getTodolists()
         dispatch(setTodoListAC(res.data))
+        dispatch(setAppStatusAC("succeeded"))
     } catch (e) {
 
     }
@@ -107,8 +110,10 @@ export const setTodoListTC = (): AppThunk => async dispatch => {
 
 export const addTodoListTC = (title: string): AppThunk => async dispatch => {
     try {
+        dispatch(setAppStatusAC("loading"))
         const res = await todolistAPI.createTodolist(title)
         dispatch(addTodoListAC(res.data.data.item))
+        dispatch(setAppStatusAC("succeeded"))
     } catch (e) {
 
     }
@@ -118,8 +123,10 @@ export const addTodoListTC = (title: string): AppThunk => async dispatch => {
 export const removeTodoListTC = (todoListID: string): AppThunk =>
     async dispatch => {
         try {
+            dispatch(setAppStatusAC("loading"))
             await todolistAPI.deleteTodolist(todoListID)
             dispatch(removeTodolistAC(todoListID))
+            dispatch(setAppStatusAC("succeeded"))
         } catch (e) {
 
         }
@@ -129,8 +136,10 @@ export const removeTodoListTC = (todoListID: string): AppThunk =>
 export const editTitleTodoListTC = (todoListID: string, title: string): AppThunk =>
     async dispatch => {
         try {
+            dispatch(setAppStatusAC("loading"))
             await todolistAPI.updateTodolistTitle(todoListID, title)
             dispatch(editTodoListAc(todoListID, title))
+            dispatch(setAppStatusAC("succeeded"))
         } catch (e) {
 
         }

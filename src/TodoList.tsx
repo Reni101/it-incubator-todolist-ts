@@ -29,7 +29,7 @@ const TodoList = memo((props: TodoListPropsType) => {
     const dispatch = useAppDispatch()
     useEffect(() => {
         dispatch(setTasksTC(props.todoListID))
-    }, [])
+    }, [dispatch, props.todoListID])
 
     let tasksForRender = props.tasks
     if (props.filter === 'active') {
@@ -82,7 +82,7 @@ const TodoList = memo((props: TodoListPropsType) => {
             <h3>
 
                 <EditableSpan title={props.title} callBack={editTodolistHandler}/>
-                <IconButton aria-label="delete" onClick={onClickRemoveTodoListHandler}>
+                <IconButton aria-label="delete" onClick={onClickRemoveTodoListHandler} disabled={false}>
                     <Delete/>
                 </IconButton>
 

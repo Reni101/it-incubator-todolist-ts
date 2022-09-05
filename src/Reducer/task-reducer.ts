@@ -3,6 +3,7 @@ import {TaskStatuses, TaskType, todolistAPI} from "../api/todolists-api";
 
 import {AppRootStateType, AppThunk} from "./store";
 import {addTodoListACType, removeTodolistACType, setTodoListACType} from "./todolists-reducer";
+import {setAppStatusAC} from "./app-reducer";
 
 export type AllTasksActions =
     | ReturnType<typeof removeTaskAC>
@@ -117,8 +118,10 @@ export const setTaskAC = (tasks: Array<TaskType>, todoListId: string) => {
 export const setTasksTC = (todolistId: string): AppThunk =>
     async dispatch => {
         try {
+            dispatch(setAppStatusAC("loading"))
             const res = await todolistAPI.getTasks(todolistId)
             dispatch(setTaskAC(res.data.items, todolistId))
+            dispatch(setAppStatusAC("succeeded"))
 
         } catch (e) {
 
@@ -128,8 +131,10 @@ export const setTasksTC = (todolistId: string): AppThunk =>
 export const removeTaskTC = (todolistId: string, taskId: string): AppThunk =>
     async dispatch => {
         try {
+            dispatch(setAppStatusAC("loading"))
             await todolistAPI.deleteTask(todolistId, taskId)
             dispatch(removeTaskAC(taskId, todolistId))
+            dispatch(setAppStatusAC("succeeded"))
         } catch (e) {
 
         }
@@ -138,8 +143,10 @@ export const removeTaskTC = (todolistId: string, taskId: string): AppThunk =>
 export const addTaskTC = (todolistId: string, title: string): AppThunk =>
     async dispatch => {
         try {
+            dispatch(setAppStatusAC("loading"))
             const res = await todolistAPI.addTaskForTodolist(todolistId, title)
             dispatch(addTaskAC(res.data.data.item))
+            dispatch(setAppStatusAC("succeeded"))
         } catch (e) {
 
         }
@@ -149,6 +156,7 @@ export const updateTaskStatusTC = (taskId: string, todolistId: string, status: T
     async (dispatch,
            getState: () => AppRootStateType) => {
         try {
+            dispatch(setAppStatusAC("loading"))
             const task = getState().task[todolistId].find(t => t.id === taskId)
             if (!!task) {
                 await todolistAPI.updateTask(todolistId, taskId, {
@@ -160,6 +168,7 @@ export const updateTaskStatusTC = (taskId: string, todolistId: string, status: T
                     startDate: task.startDate,
                 })
                 dispatch(changeTaskStatusAC(taskId, status, todolistId))
+                dispatch(setAppStatusAC("succeeded"))
             }
         } catch (e) {
 
@@ -170,8 +179,9 @@ export const updateTaskTitleTC = (taskId: string, todolistId: string, title: str
     async (dispatch,
            getState: () => AppRootStateType) => {
         try {
+            dispatch(setAppStatusAC("loading"))
             const task = getState().task[todolistId].find(t => t.id === taskId)
-            if (task) {
+            if (!!task) {
                 await todolistAPI.updateTask(todolistId, taskId, {
                     title,
                     status: task.status,
@@ -179,9 +189,9 @@ export const updateTaskTitleTC = (taskId: string, todolistId: string, title: str
                     description: task.description,
                     priority: task.priority,
                     startDate: task.startDate,
-
                 })
                 dispatch(changeTaskTitleAC(taskId, title, todolistId))
+                dispatch(setAppStatusAC("succeeded"))
             }
         } catch (e) {
 
