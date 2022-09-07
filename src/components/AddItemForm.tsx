@@ -4,6 +4,7 @@ import {Button, TextField} from "@mui/material";
 
 type AddItemFormPropsType = {
     callBack: (title: string) => void
+    disabled?:boolean
 }
 
 export const AddItemForm = memo((props: AddItemFormPropsType) => {
@@ -56,6 +57,7 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
                         minHeight: '38px',
                         marginLeft: "5px"
                     }}
+                    disabled={props.disabled}
             >+</Button>
         </div>
     );

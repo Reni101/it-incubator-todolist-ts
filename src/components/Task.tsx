@@ -31,7 +31,7 @@ const Task = memo(({
 
     return (
         <div>
-            <Checkbox defaultChecked
+            <Checkbox
                       checked={task.status === TaskStatuses.Completed}
                       onChange={ChangeTaskHandler}
 

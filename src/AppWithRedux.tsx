@@ -79,7 +79,7 @@ const AppWithRedux = () => {
     return (
         <div className="App">
             <ButtonAppBar/>
-            { status === 'loading' && < LinearProgress color="secondary"/> }
+            {status === 'loading' && < LinearProgress color="secondary"/>}
             <Container fixed>
                 <Grid container style={{paddingTop: '10px'}}>
                     <span>Add todoList </span>-
@@ -96,6 +96,7 @@ const AppWithRedux = () => {
                                         todoListID={el.id}
                                         filter={el.filter}
                                         title={el.title}
+                                        entityStatus={el.entityStatus}
                                         tasks={tasksForRender}
                                         removeTodolist={removeTodolist}
                                         RemoveTask={removeTask}
@@ -104,6 +105,7 @@ const AppWithRedux = () => {
                                         changeTaskStatus={changeTaskStatus}
                                         editTodolist={editTodolist}
                                         editTask={editTask}
+
                                     />
                                 </Paper>
                             </Grid>
