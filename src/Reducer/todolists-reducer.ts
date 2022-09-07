@@ -4,18 +4,13 @@ import {RequestStatusType, setAppStatusAC} from "./app-reducer";
 import axios from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 
-
-const RemoveTodoList = 'REMOVE-TODOLIST'
-const AddTodoList = 'ADD-TODOLIST'
-
-
 export type AllTodolistsActions =
     | removeTodolistACType
     | addTodoListACType
+    | setTodoListACType
     | ReturnType<typeof editTodoListAc>
     | ReturnType<typeof changeFilterAC>
     | ReturnType<typeof changeTodolistEntityStatusAC>
-    | setTodoListACType
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
@@ -28,10 +23,10 @@ const initialState: Array<TodolistDomainType> = [];
 
 export const todoListsReducer = (state = initialState, action: AllTodolistsActions): Array<TodolistDomainType> => {
     switch (action.type) {
-        case RemoveTodoList: {
+        case 'REMOVE-TODOLIST': {
             return state.filter(el => el.id !== action.payload.id)
         }
-        case AddTodoList: {
+        case 'ADD-TODOLIST': {
             let newTodolist: TodolistDomainType = {
                 ...action.newTodolist
                 , filter: "all", entityStatus: "idle"
