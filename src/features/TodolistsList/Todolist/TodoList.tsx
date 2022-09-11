@@ -1,15 +1,15 @@
 import React, {memo, useCallback, useEffect} from 'react';
-import {AddItemForm} from "./components/AddItemForm";
-import {EditableSpan} from "./components/EditableSpan";
+import {AddItemForm} from "../../../components/AddItemForm";
+import {EditableSpan} from "../../../components/EditableSpan";
 import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
-import Task from "./components/Task";
-import {TaskStatuses, TaskType} from "./api/todolists-api";
-import {FilterValuesType} from "./Reducer/todolists-reducer";
+import Task from "./Task/Task";
+import {TaskStatuses, TaskType} from "../../../api/todolists-api";
+import {FilterValuesType} from "../../../Reducer/todolists-reducer";
 
-import {setTasksTC} from "./Reducer/task-reducer";
-import {useAppDispatch} from "./hooks/hooks";
-import {RequestStatusType} from "./Reducer/app-reducer";
+import {setTasksTC} from "../../../Reducer/task-reducer";
+import {useAppDispatch} from "../../../hooks/hooks";
+import {RequestStatusType} from "../../../Reducer/app-reducer";
 
 type TodoListPropsType = {
     todoListID: string
@@ -27,7 +27,7 @@ type TodoListPropsType = {
 
 }
 
-const TodoList = memo((props: TodoListPropsType) => {
+export const TodoList = memo((props: TodoListPropsType) => {
     const dispatch = useAppDispatch()
     useEffect(() => {
         dispatch(setTasksTC(props.todoListID))
@@ -106,4 +106,4 @@ const TodoList = memo((props: TodoListPropsType) => {
     );
 });
 
-export default TodoList;
+

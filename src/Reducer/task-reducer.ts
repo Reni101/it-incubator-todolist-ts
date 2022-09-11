@@ -1,4 +1,4 @@
-import {TasksType} from "../AppWithRedux";
+import {TasksType} from "../app/App";
 import {TaskStatuses, TaskType, todolistAPI} from "../api/todolists-api";
 import axios from 'axios';
 
@@ -75,43 +75,29 @@ export const tasksReducer = (state = initialState, action: AllTasksActions): Tas
 };
 
 //==================================AC ===========================================
-export const removeTaskAC = (taskId: string, todolistId: string) => {
-    return {
-        type: "REMOVE-TASK",
-        taskId,
-        todolistId,
-    } as const
-
-}
-export const addTaskAC = (task: TaskType) => {
-    return {
-        type: "ADD-TASK",
-        task
-    } as const
-}
-export const changeTaskStatusAC = (taskId: string, status: TaskStatuses, todolistId: string) => {
-    return {
-        type: "CHANGE-TASK-STATUS",
-        taskId,
-        status,
-        todolistId,
-    } as const
-}
-export const changeTaskTitleAC = (taskId: string, title: string, todolistId: string) => {
-    return {
-        type: "CHANGE-TASK-TITLE",
-        taskId,
-        title,
-        todolistId,
-    } as const
-}
-export const setTaskAC = (tasks: Array<TaskType>, todoListId: string) => {
-    return {
-        type: 'SET-TASKS',
-        tasks,
-        todoListId,
-    } as const
-}
+export const removeTaskAC = (taskId: string, todolistId: string) => ({
+    type: "REMOVE-TASK",
+    taskId,
+    todolistId,
+} as const)
+export const addTaskAC = (task: TaskType) => ({type: "ADD-TASK", task} as const)
+export const changeTaskStatusAC = (taskId: string, status: TaskStatuses, todolistId: string) => ({
+    type: "CHANGE-TASK-STATUS",
+    taskId,
+    status,
+    todolistId,
+} as const)
+export const changeTaskTitleAC = (taskId: string, title: string, todolistId: string) => ({
+    type: "CHANGE-TASK-TITLE",
+    taskId,
+    title,
+    todolistId,
+} as const)
+export const setTaskAC = (tasks: Array<TaskType>, todoListId: string) => ({
+    type: 'SET-TASKS',
+    tasks,
+    todoListId,
+} as const)
 
 
 //================================= TC =============================

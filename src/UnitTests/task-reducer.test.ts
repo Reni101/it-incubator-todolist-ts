@@ -1,6 +1,6 @@
 import React from 'react';
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "../Reducer/task-reducer";
-import {TasksType} from "../AppWithRedux";
+import {TasksType} from "../app/App";
 import {TaskStatuses} from "../api/todolists-api";
 
 

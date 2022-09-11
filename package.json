@@ -1,6 +1,6 @@
 {
   "name": "it-incubator-todolist-ts",
-  "homepage": "https://Reni101.github.io/it-incubator-todolist-ts",
+  "homepage": "https://Reni101.github.io/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -20,10 +20,12 @@
     "@types/redux": "^3.6.0",
     "@types/uuid": "^8.3.4",
     "axios": "^0.27.2",
+    "formik": "^2.2.9",
     "gh-pages": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.2",
+    "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",

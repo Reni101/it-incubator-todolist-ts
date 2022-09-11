@@ -27,11 +27,10 @@ export const todoListsReducer = (state = initialState, action: AllTodolistsActio
             return state.filter(el => el.id !== action.payload.id)
         }
         case 'ADD-TODOLIST': {
-            let newTodolist: TodolistDomainType = {
+            return [{
                 ...action.newTodolist
                 , filter: "all", entityStatus: "idle"
-            }
-            return [newTodolist, ...state]
+            }, ...state]
         }
         case 'CHANGE-TODOLIST-TITLE': {
             return state.map(el => el.id === action.payload.id ? {...el, title: action.payload.title} : el)
@@ -63,43 +62,31 @@ export const removeTodolistAC = (id: string) => {
 }
 
 export type addTodoListACType = ReturnType<typeof addTodoListAC>
-export const addTodoListAC = (newTodolist: TodolistType) => {
-    return {
-        type: 'ADD-TODOLIST',
-        newTodolist
-    } as const
-
-}
+export const addTodoListAC = (newTodolist: TodolistType) => ({
+    type: 'ADD-TODOLIST',
+    newTodolist
+} as const)
 
 export type setTodoListACType = ReturnType<typeof setTodoListAC>
-export const setTodoListAC = (todoLists: Array<TodolistType>) => {
-    return {
-        type: 'SET-TODOLIST',
-        todoLists,
-    } as const
-}
+export const setTodoListAC = (todoLists: Array<TodolistType>) => ({
+    type: 'SET-TODOLIST',
+    todoLists,
+} as const)
 
+export const editTodoListAc = (id: string, title: string) => ({
+    type: 'CHANGE-TODOLIST-TITLE',
+    payload: {id, title}
+} as const)
 
-export const editTodoListAc = (id: string, title: string) => {
-    return {
-        type: 'CHANGE-TODOLIST-TITLE',
-        payload: {id, title}
-    } as const
-}
+export const changeFilterAC = (id: string, filter: FilterValuesType) => ({
+    type: 'CHANGE-TODOLIST-FILTER',
+    payload: {id, filter}
+} as const)
 
-export const changeFilterAC = (id: string, filter: FilterValuesType) => {
-    return {
-        type: 'CHANGE-TODOLIST-FILTER',
-        payload: {id, filter}
-    } as const
-}
-
-export const changeTodolistEntityStatusAC = (todolistId: string, status: RequestStatusType) => {
-    return {
-        type: 'CHANGE-TODOLIST-ENTITY-STATUS',
-        todolistId, status
-    } as const
-}
+export const changeTodolistEntityStatusAC = (todolistId: string, status: RequestStatusType) => ({
+    type: 'CHANGE-TODOLIST-ENTITY-STATUS',
+    todolistId, status
+} as const)
 
 
 //=======================Thunk async await =========================
