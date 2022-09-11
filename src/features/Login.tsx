@@ -12,11 +12,7 @@ import {setAppStatusAC} from "../Reducer/app-reducer";
 
 
 export const Login = () => {
-    const dispatch = useAppDispatch()
 
-    useEffect(() => {
-        dispatch(setAppStatusAC("succeeded"))
-    }, [dispatch])
 
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
