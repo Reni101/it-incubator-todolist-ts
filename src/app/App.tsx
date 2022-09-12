@@ -10,7 +10,7 @@ import {RequestStatusType} from "../Reducer/app-reducer";
 import {ErrorSnackbar} from "../components/ErrorSnackbar";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
 import {Login} from "../features/Login";
-import {Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 
 
 export type TasksType = {
@@ -30,7 +30,8 @@ export const App = () => {
                 <Routes>
                     <Route path='/' element={<TodolistsList/>}/>
                     <Route path='login' element={<Login/>}/>
-                    <Route path="*" element={<h1>404: PAGE NOT FOUND</h1>}/>
+                    <Route path="/404" element={<h1>404: PAGE NOT FOUND</h1>}/>
+                    <Route path="*" element={<Navigate to='/404'/>}/>
                 </Routes>
 
             </Container>
