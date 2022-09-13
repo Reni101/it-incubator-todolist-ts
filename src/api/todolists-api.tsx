@@ -65,6 +65,15 @@ export type GetTaskResponseType = {
     items: Array<TaskType>;
 }
 
+
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe?: boolean
+    captcha?: boolean
+}
+
+
 export const todolistAPI = {
     getTodolists() {
         return instane.get<TodolistType[]>('todo-lists')
@@ -91,4 +100,10 @@ export const todolistAPI = {
         return instane.put<ResponseType<{ item: TaskType }>>(`/todo-lists/${todolistID}/tasks/${taskId}`, model)
     },
 
+}
+
+export const authAPI = {
+    login(data: LoginParamsType) {
+        return instane.post<ResponseType<{ userId: number }>>("/auth/login", data)
+    }
 }

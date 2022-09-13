@@ -105,11 +105,12 @@ export const setTaskAC = (tasks: Array<TaskType>, todoListId: string) => ({
 
 export const setTasksTC = (todolistId: string): AppThunk =>
     async dispatch => {
+
         try {
             dispatch(setAppStatusAC("loading"))
             const res = await todolistAPI.getTasks(todolistId)
             dispatch(setTaskAC(res.data.items, todolistId))
-            dispatch(setAppStatusAC("succeeded"))
+            dispatch(setAppStatusAC('succeeded'))
 
         } catch (err) {
             if (axios.isAxiosError(err)) {
@@ -127,7 +128,7 @@ export const removeTaskTC = (todolistId: string, taskId: string): AppThunk =>
             const res = await todolistAPI.deleteTask(todolistId, taskId)
             if (res.data.resultCode === 0) {
                 dispatch(removeTaskAC(taskId, todolistId))
-                dispatch(setAppStatusAC("succeeded"))
+                dispatch(setAppStatusAC('succeeded'))
             } else {
                 handleServerAppError(res.data, dispatch)
             }
@@ -148,7 +149,8 @@ export const addTaskTC = (todolistId: string, title: string): AppThunk =>
             const res = await todolistAPI.addTaskForTodolist(todolistId, title)
             if (res.data.resultCode === 0) {
                 dispatch(addTaskAC(res.data.data.item))
-                dispatch(setAppStatusAC("succeeded"))
+                dispatch(setAppStatusAC('succeeded'))
+
             } else {
                 handleServerAppError(res.data, dispatch)
             }
@@ -179,7 +181,7 @@ export const updateTaskStatusTC = (taskId: string, todolistId: string, status: T
                 })
                 if (res.data.resultCode === 0) {
                     dispatch(changeTaskStatusAC(taskId, status, todolistId))
-                    dispatch(setAppStatusAC("succeeded"))
+                    dispatch(setAppStatusAC('succeeded'))
                 } else {
                     handleServerAppError(res.data, dispatch)
                 }
@@ -212,7 +214,7 @@ export const updateTaskTitleTC = (taskId: string, todolistId: string, title: str
 
                 if (res.data.resultCode === 0) {
                     dispatch(changeTaskTitleAC(taskId, title, todolistId))
-                    dispatch(setAppStatusAC("succeeded"))
+                    dispatch(setAppStatusAC('succeeded'))
                 } else {
                     handleServerAppError(res.data, dispatch)
                 }

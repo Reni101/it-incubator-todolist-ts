@@ -96,7 +96,7 @@ export const setTodoListTC = (): AppThunk => async dispatch => {
         dispatch(setAppStatusAC("loading"))
         const res = await todolistAPI.getTodolists()
         dispatch(setTodoListAC(res.data))
-        dispatch(setAppStatusAC("succeeded"))
+        dispatch(setAppStatusAC('succeeded'))
     } catch (err) {
         if (axios.isAxiosError(err)) {
             handleServerNetworkError(err, dispatch)
@@ -104,7 +104,6 @@ export const setTodoListTC = (): AppThunk => async dispatch => {
             console.error(err)
         }
     }
-
 
 }
 
@@ -115,7 +114,7 @@ export const addTodoListTC = (title: string): AppThunk => async dispatch => {
 
         if (res.data.resultCode === 0) {
             dispatch(addTodoListAC(res.data.data.item))
-            dispatch(setAppStatusAC("succeeded"))
+            dispatch(setAppStatusAC('succeeded'))
         } else {
             handleServerAppError(res.data, dispatch)
         }
@@ -138,7 +137,7 @@ export const removeTodoListTC = (todoListID: string): AppThunk =>
             const res = await todolistAPI.deleteTodolist(todoListID)
             if (res.data.resultCode === 0) {
                 dispatch(removeTodolistAC(todoListID))
-                dispatch(setAppStatusAC("succeeded"))
+                dispatch(setAppStatusAC('succeeded'))
             } else {
                 handleServerAppError(res.data, dispatch)
             }
@@ -151,7 +150,6 @@ export const removeTodoListTC = (todoListID: string): AppThunk =>
             }
         }
 
-
     }
 export const editTitleTodoListTC = (todoListID: string, title: string): AppThunk =>
     async dispatch => {
@@ -160,7 +158,7 @@ export const editTitleTodoListTC = (todoListID: string, title: string): AppThunk
             const res = await todolistAPI.updateTodolistTitle(todoListID, title)
             if (res.data.resultCode === 0) {
                 dispatch(editTodoListAc(todoListID, title))
-                dispatch(setAppStatusAC("succeeded"))
+                dispatch(setAppStatusAC('succeeded'))
             } else {
                 handleServerAppError(res.data, dispatch)
             }
