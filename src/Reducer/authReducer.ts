@@ -5,7 +5,7 @@ import axios from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 
 const initialState = {
-    isLoggedIn: true
+    isLoggedIn: false
 }
 type InitialStateType = typeof initialState
 export type AuthActionsType =

@@ -11,7 +11,7 @@ import {useFormik} from "formik";
 import {useAppDispatch, useAppSelector} from "../hooks/hooks";
 import {loginTC} from "../Reducer/authReducer";
 import {Navigate} from "react-router-dom";
-import {setTodoListTC} from "../Reducer/todolists-reducer";
+
 
 
 type FormikErrorType = {
@@ -59,7 +59,7 @@ export const Login = () => {
 
 
     if (isloggedIn) {
-        return <Navigate to='/it-incubator-todolist-ts'/>
+        return <Navigate to='/'/>
     }
 
 

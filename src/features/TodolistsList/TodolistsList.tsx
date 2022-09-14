@@ -28,7 +28,7 @@ export const TodolistsList = ()  => {
             return;
         }
         dispatch(setTodoListTC())
-    }, [dispatch,isloggedIn])
+    }, [])
 
 
     const removeTask = useCallback((todoListID: string, tasksID: string) => {

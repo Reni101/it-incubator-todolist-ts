@@ -46,13 +46,12 @@ export const setIsInitializedAC = (value: boolean) => ({
 
 export const initializeAppTC = (): AppThunk => async dispatch => {
     try {
-        dispatch(setIsInitializedAC(false))
         const res = await authAPI.me()
         if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC(true));
-            dispatch(setIsInitializedAC(true))
         } else {
-            handleServerAppError(res.data, dispatch)
+            /*handleServerAppError(res.data, dispatch)*/
+            dispatch(setIsLoggedInAC(false))
         }
     } catch (err) {
         if (axios.isAxiosError(err)) {
@@ -60,11 +59,13 @@ export const initializeAppTC = (): AppThunk => async dispatch => {
         } else {
             console.error(err)
         }
+    } finally {
+        dispatch(setIsInitializedAC(true))
     }
 
 
 }
-
+//
 
 export type AppActionsType =
     | ReturnType<typeof setAppStatusAC>
