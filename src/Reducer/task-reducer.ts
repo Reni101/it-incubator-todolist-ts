@@ -1,4 +1,3 @@
-
 import {TaskStatuses, TaskType, todolistAPI} from "../api/todolists-api";
 import axios from 'axios';
 
@@ -25,19 +24,17 @@ const initialState: TasksType = {}
 
 export const tasksReducer = (state = initialState, action: AllTasksActions): TasksType => {
     switch (action.type) {
-        case 'REMOVE-TASK': {
+        case 'REMOVE-TASK':
             return {
                 ...state, [action.todolistId]: state[action.todolistId].filter(el => el.id !== action.taskId)
             }
-        }
-        case 'ADD-TASK': {
-
+        case 'ADD-TASK':
             return {
                 ...state, [action.task.todoListId]: [action.task,
                     ...state[action.task.todoListId]]
             }
-        }
-        case 'CHANGE-TASK-STATUS': {
+
+        case 'CHANGE-TASK-STATUS':
             return {
                 ...state,
                 [action.todolistId]: state[action.todolistId].map(el => el.id === action.taskId ? {
@@ -45,8 +42,8 @@ export const tasksReducer = (state = initialState, action: AllTasksActions): Tas
                     status: action.status
                 } : el)
             }
-        }
-        case 'CHANGE-TASK-TITLE': {
+
+        case 'CHANGE-TASK-TITLE':
             return {
                 ...state,
                 [action.todolistId]: state[action.todolistId].map(el => el.id === action.taskId ? {
@@ -54,26 +51,23 @@ export const tasksReducer = (state = initialState, action: AllTasksActions): Tas
                     title: action.title
                 } : el)
             }
-        }
-        case "ADD-TODOLIST": {
+
+        case "ADD-TODOLIST":
             return {...state, [action.newTodolist.id]: []}
-        }
+
         case "REMOVE-TODOLIST": {
             const stateCopy = {...state}
             delete stateCopy[action.payload.id]
             return stateCopy
         }
-        case "SET-TODOLIST": {
+        case "SET-TODOLIST":
             const copyState = {...state};
             action.todoLists.forEach(tl => copyState[tl.id] = [])
             return copyState
-        }
-        case "SET-TASKS": {
+
+        case "SET-TASKS":
             return {...state, [action.todoListId]: action.tasks}
-        }
-
-
-        default:
+                default:
             return state
     }
 };

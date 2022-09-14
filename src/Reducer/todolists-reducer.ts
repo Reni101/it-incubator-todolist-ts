@@ -23,31 +23,24 @@ const initialState: Array<TodolistDomainType> = [];
 
 export const todoListsReducer = (state = initialState, action: AllTodolistsActions): Array<TodolistDomainType> => {
     switch (action.type) {
-        case 'REMOVE-TODOLIST': {
+        case 'REMOVE-TODOLIST':
             return state.filter(el => el.id !== action.payload.id)
-        }
-        case 'ADD-TODOLIST': {
+        case 'ADD-TODOLIST':
             return [{
                 ...action.newTodolist
                 , filter: "all", entityStatus: "idle"
             }, ...state]
-        }
-        case 'CHANGE-TODOLIST-TITLE': {
+        case 'CHANGE-TODOLIST-TITLE':
             return state.map(el => el.id === action.payload.id ? {...el, title: action.payload.title} : el)
-        }
-        case 'CHANGE-TODOLIST-FILTER' : {
+        case 'CHANGE-TODOLIST-FILTER' :
             return state.map(el => el.id === action.payload.id ? {...el, filter: action.payload.filter} : el)
-        }
-        case "SET-TODOLIST": {
+        case "SET-TODOLIST":
             return action.todoLists.map(tl => ({
                 ...tl, filter: 'all', entityStatus: "idle"
             }))
-        }
-        case "CHANGE-TODOLIST-ENTITY-STATUS": {
+        case "CHANGE-TODOLIST-ENTITY-STATUS":
             return state.map(tl => tl.id === action.todolistId ?
                 {...tl, entityStatus: action.status} : tl)
-        }
-
         default:
             return state
     }

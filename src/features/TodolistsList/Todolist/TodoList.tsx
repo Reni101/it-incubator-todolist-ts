@@ -43,11 +43,11 @@ export const TodoList = memo((props: TodoListPropsType) => {
 
     const editTasktHandler = useCallback((taskId: string, newTitle: string) => {
         props.editTask(props.todoListID, taskId, newTitle)
-    }, [props.editTask, props.todoListID])
-    const removeTask = useCallback((taskId: string) => props.RemoveTask(props.todoListID, taskId), [props.RemoveTask, props.todoListID])
+    }, [props])
+    const removeTask = useCallback((taskId: string) => props.RemoveTask(props.todoListID, taskId), [props])
     const ChangeTaskHandler = useCallback((taskId: string, status: TaskStatuses) => {
         props.changeTaskStatus(props.todoListID, taskId, status)
-    }, [props.changeTaskStatus, props.todoListID])
+    }, [props])
 
 
     const tasksMap = props.tasks.length
@@ -61,12 +61,12 @@ export const TodoList = memo((props: TodoListPropsType) => {
                 editTask={editTasktHandler}
             />
         })
-        : <span>empty</span>
+        :  null // <span>empty</span>
 
 
     const addTaskHandler = useCallback((title: string) => {
         props.addTask(props.todoListID, title)
-    }, [props.addTask, props.todoListID])
+    }, [props])
 
     const onClickRemoveTodoListHandler = () => {
         props.removeTodolist(props.todoListID)
@@ -74,7 +74,7 @@ export const TodoList = memo((props: TodoListPropsType) => {
     }
     const editTodolistHandler = useCallback((newTitle: string) => {
         props.editTodolist(props.todoListID, newTitle)
-    }, [props.editTodolist, props.todoListID])
+    }, [props])
 
     const buttonClassALL = props.filter === "all" ? "outlined" : "contained"
     const buttonClassActive = props.filter === "active" ? "outlined" : "contained"

@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import './App.css';
 
 import {ButtonAppBar} from "../components/ButtonAppBar";
-import {Container} from "@mui/material";
+import {CircularProgress, Container} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../hooks/hooks";
 import LinearProgress from '@mui/material/LinearProgress';
 import {initializeAppTC, RequestStatusType} from "../Reducer/app-reducer";
@@ -12,15 +12,21 @@ import {Login} from "../features/Login";
 import {Navigate, Route, Routes} from "react-router-dom";
 
 
-
 export const App = () => {
     const status: RequestStatusType = useAppSelector(state => state.app.status)
+    const isInitialized = useAppSelector(state => state.app.isInitialized)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(initializeAppTC())
     }, [dispatch])
 
+    if (!isInitialized) {
+        return <div
+            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <CircularProgress/>
+        </div>
+    }
 
     return (
         <div className="App">
