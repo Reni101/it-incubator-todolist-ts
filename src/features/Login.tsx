@@ -58,7 +58,7 @@ export const Login = () => {
 
 
     if (isloggedIn) {
-        return <Navigate to='/'/>
+        return <Navigate to='/it-incubator-todolist-ts'/>
     }
 
 
