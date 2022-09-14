@@ -6,10 +6,21 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import {useAppDispatch, useAppSelector} from "../hooks/hooks";
+import {logoutTC} from "../Reducer/authReducer";
 
-export default function ButtonAppBar() {
+export const ButtonAppBar = () => {
+    const dispatch = useAppDispatch()
+    const isloggedIn = useAppSelector(state => state.auth.isLoggedIn)
+
+
+    const logoutHandler = () => {
+        dispatch(logoutTC())
+    }
+
+
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton
@@ -17,14 +28,14 @@ export default function ButtonAppBar() {
                         edge="start"
                         color="inherit"
                         aria-label="menu"
-                        sx={{ mr: 2 }}
+                        sx={{mr: 2}}
                     >
-                        <MenuIcon />
+                        <MenuIcon/>
                     </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        Menu
+                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    {isloggedIn && <Button color="inherit" onClick={logoutHandler}>Logout</Button>}
                 </Toolbar>
             </AppBar>
         </Box>

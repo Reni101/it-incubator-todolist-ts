@@ -14,18 +14,21 @@ import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {TasksType} from "../../app/App";
 import {addTaskTC, removeTaskTC, updateTaskStatusTC, updateTaskTitleTC} from "../../Reducer/task-reducer";
 import {TaskStatuses} from "../../api/todolists-api";
+import {Navigate} from "react-router-dom";
 
 
 export const TodolistsList = ()  => {
     const todoLists: Array<TodolistDomainType> = useAppSelector(state => state.todolists)
     const task: TasksType = useAppSelector(state => state.task)
-
     const dispatch = useAppDispatch()
-
+    const isloggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
     useEffect(() => {
+        if(!isloggedIn){
+            return;
+        }
         dispatch(setTodoListTC())
-    }, [dispatch])
+    }, [dispatch,isloggedIn])
 
 
     const removeTask = useCallback((todoListID: string, tasksID: string) => {
@@ -38,27 +41,22 @@ export const TodolistsList = ()  => {
     }, [dispatch])
 
     const addTask = useCallback((todoListID: string, title: string) => {
-
         dispatch(addTaskTC(todoListID, title))
     }, [dispatch])
 
     const changeTaskStatus = useCallback((todoListID: string, tasksID: string, status: TaskStatuses) => {
-
         dispatch(updateTaskStatusTC(tasksID, todoListID, status))
     }, [dispatch])
 
     const removeTodolist = useCallback((todoListID: string) => {
-
         dispatch(removeTodoListTC(todoListID))
 
     }, [dispatch])
     const addTodoList = useCallback((title: string) => {
-
         dispatch(addTodoListTC(title))
     }, [dispatch])
 
     const editTodolist = useCallback((toDoListID: string, newTitle: string) => {
-
         dispatch(editTitleTodoListTC(toDoListID, newTitle))
     }, [dispatch])
 
@@ -66,6 +64,9 @@ export const TodolistsList = ()  => {
         dispatch(updateTaskTitleTC(taskId, toDoListID, newTitle))
     }, [dispatch])
 
+    if (!isloggedIn) {
+        return <Navigate to='/login'/>
+    }
 
     return <>
         <Grid container style={{paddingTop: '10px'}}>

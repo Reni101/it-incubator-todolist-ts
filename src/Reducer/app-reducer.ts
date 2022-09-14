@@ -1,3 +1,7 @@
+import {AppThunk} from "./store";
+import {authAPI} from "../api/todolists-api";
+import {setIsLoggedInAC} from "./authReducer";
+
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 const initialState = {
@@ -28,6 +32,15 @@ export const setAppErrorAC = (error: string | null) => ({
     type: 'APP/SET-ERROR',
     error
 } as const)
+//==============================TC============================
+
+export const initializeAppTC = (): AppThunk => async dispatch => {
+    const res = await authAPI.me()
+    if (res.data.resultCode === 0) {
+        dispatch(setIsLoggedInAC(true));
+    } else {
+    }
+}
 
 
 export type AppActionsType =

@@ -105,5 +105,12 @@ export const todolistAPI = {
 export const authAPI = {
     login(data: LoginParamsType) {
         return instane.post<ResponseType<{ userId: number }>>("/auth/login", data)
-    }
+    },
+    logout() {
+        return instane.delete<ResponseType>("/auth/login")
+    },
+
+    me() {
+        return instane.get<ResponseType<{ id: string, email: string, login: string }>>("/auth/me")
+    },
 }

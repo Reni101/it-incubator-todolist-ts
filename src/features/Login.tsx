@@ -8,8 +8,9 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
-import {useAppDispatch} from "../hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../hooks/hooks";
 import {loginTC} from "../Reducer/authReducer";
+import {Navigate} from "react-router-dom";
 
 
 type FormikErrorType = {
@@ -23,6 +24,7 @@ enum ValidateLength {
 }
 
 export const Login = () => {
+    const isloggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const dispatch = useAppDispatch()
     const formik = useFormik({
         initialValues: {
@@ -49,10 +51,16 @@ export const Login = () => {
         onSubmit: values => {
 
             dispatch(loginTC(values))
-         /*   formik.resetForm()*/
+            /*   formik.resetForm()*/
 
         },
     });
+
+
+    if (isloggedIn) {
+        return <Navigate to='/'/>
+    }
+
 
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>

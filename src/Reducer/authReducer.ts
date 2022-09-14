@@ -45,6 +45,22 @@ export const loginTC = (data: LoginParamsType): AppThunk => async dispatch => {
     }
 }
 
-export const logoutTC =():AppThunk=> async dispatch => {
+export const logoutTC = (): AppThunk => async dispatch => {
+    try {
+        dispatch(setAppStatusAC('loading'))
+        const res = await authAPI.logout()
+        if (res.data.resultCode === 0) {
+            dispatch(setIsLoggedInAC(false))
+            dispatch(setAppStatusAC('succeeded'))
+        } else {
+            handleServerAppError(res.data, dispatch)
+        }
+    } catch (err) {
+        if (axios.isAxiosError(err)) {
+            handleServerNetworkError(err, dispatch)
+        } else {
+            console.error(err)
+        }
+    }
 
 }
