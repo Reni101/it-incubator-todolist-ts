@@ -3,7 +3,6 @@ import './App.css';
 
 import {ButtonAppBar} from "../components/ButtonAppBar";
 import {Container} from "@mui/material";
-import {TaskType} from "../api/todolists-api";
 import {useAppDispatch, useAppSelector} from "../hooks/hooks";
 import LinearProgress from '@mui/material/LinearProgress';
 import {initializeAppTC, RequestStatusType} from "../Reducer/app-reducer";
@@ -13,18 +12,15 @@ import {Login} from "../features/Login";
 import {Navigate, Route, Routes} from "react-router-dom";
 
 
-export type TasksType = {
-    [key: string]: Array<TaskType>
-}
 
 export const App = () => {
-
+    const status: RequestStatusType = useAppSelector(state => state.app.status)
     const dispatch = useAppDispatch()
+
     useEffect(() => {
         dispatch(initializeAppTC())
     }, [dispatch])
 
-    const status: RequestStatusType = useAppSelector(state => state.app.status)
 
     return (
         <div className="App">

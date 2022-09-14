@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Grid from '@mui/material/Grid';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
@@ -11,6 +11,7 @@ import {useFormik} from "formik";
 import {useAppDispatch, useAppSelector} from "../hooks/hooks";
 import {loginTC} from "../Reducer/authReducer";
 import {Navigate} from "react-router-dom";
+import {setTodoListTC} from "../Reducer/todolists-reducer";
 
 
 type FormikErrorType = {
@@ -24,6 +25,7 @@ enum ValidateLength {
 }
 
 export const Login = () => {
+
     const isloggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const dispatch = useAppDispatch()
     const formik = useFormik({
@@ -49,9 +51,8 @@ export const Login = () => {
             return errors
         },
         onSubmit: values => {
-
             dispatch(loginTC(values))
-            /*   formik.resetForm()*/
+            formik.resetForm()
 
         },
     });

@@ -1,4 +1,4 @@
-import {TasksType} from "../app/App";
+
 import {TaskStatuses, TaskType, todolistAPI} from "../api/todolists-api";
 import axios from 'axios';
 
@@ -16,6 +16,10 @@ export type AllTasksActions =
     | addTodoListACType
     | removeTodolistACType
     | setTodoListACType
+
+export type TasksType = {
+    [key: string]: Array<TaskType>
+}
 
 const initialState: TasksType = {}
 

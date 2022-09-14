@@ -11,8 +11,8 @@ import {
 } from "../../Reducer/todolists-reducer";
 import {AddItemForm} from "../../components/AddItemForm";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
-import {TasksType} from "../../app/App";
-import {addTaskTC, removeTaskTC, updateTaskStatusTC, updateTaskTitleTC} from "../../Reducer/task-reducer";
+
+import {addTaskTC, removeTaskTC, TasksType, updateTaskStatusTC, updateTaskTitleTC} from "../../Reducer/task-reducer";
 import {TaskStatuses} from "../../api/todolists-api";
 import {Navigate} from "react-router-dom";
 

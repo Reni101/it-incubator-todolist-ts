@@ -1,6 +1,8 @@
 import {AppThunk} from "./store";
 import {authAPI} from "../api/todolists-api";
 import {setIsLoggedInAC} from "./authReducer";
+import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
+import axios from "axios";
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -35,11 +37,22 @@ export const setAppErrorAC = (error: string | null) => ({
 //==============================TC============================
 
 export const initializeAppTC = (): AppThunk => async dispatch => {
-    const res = await authAPI.me()
-    if (res.data.resultCode === 0) {
-        dispatch(setIsLoggedInAC(true));
-    } else {
+    try {
+        const res = await authAPI.me()
+        if (res.data.resultCode === 0) {
+            dispatch(setIsLoggedInAC(true));
+        } else {
+            handleServerAppError(res.data, dispatch)
+        }
+    } catch (err) {
+        if (axios.isAxiosError(err)) {
+            handleServerNetworkError(err, dispatch)
+        } else {
+            console.error(err)
+        }
     }
+
+
 }
 
 
