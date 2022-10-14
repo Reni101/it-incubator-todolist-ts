@@ -28,11 +28,6 @@ type TodoListPropsType = {
 }
 
 export const TodoList = memo((props: TodoListPropsType) => {
-    const dispatch = useAppDispatch()
-    useEffect(() => {
-        dispatch(setTasksTC(props.todoListID))
-    }, [dispatch, props.todoListID])
-
     let tasksForRender = props.tasks
     if (props.filter === 'active') {
         tasksForRender = props.tasks.filter(t => t.status === TaskStatuses.New)

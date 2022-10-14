@@ -4,8 +4,8 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import {Provider} from "react-redux";
 import {store} from "./Reducer/store";
-import {BrowserRouter} from "react-router-dom";
 import {App} from "./app/App";
+import {HashRouter} from "react-router-dom";
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
@@ -13,9 +13,9 @@ const root = createRoot(container!);
 
 root.render(
     <Provider store={store}>
-        <BrowserRouter>
+        <HashRouter>
             <App/>
-        </BrowserRouter>
+        </HashRouter>
     </Provider>
 );
 

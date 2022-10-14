@@ -2,7 +2,7 @@ import {TaskStatuses, TaskType, todolistAPI} from "../api/todolists-api";
 import axios from 'axios';
 
 import {AppRootStateType, AppThunk} from "./store";
-import {addTodoListACType, removeTodolistACType, setTodoListACType} from "./todolists-reducer";
+import {addTodoListACType, clearTodosDataACType, removeTodolistACType, setTodoListACType} from "./todolists-reducer";
 import {setAppStatusAC} from "./app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 
@@ -15,6 +15,7 @@ export type AllTasksActions =
     | addTodoListACType
     | removeTodolistACType
     | setTodoListACType
+    | clearTodosDataACType
 
 export type TasksType = {
     [key: string]: Array<TaskType>
@@ -67,7 +68,9 @@ export const tasksReducer = (state = initialState, action: AllTasksActions): Tas
 
         case "SET-TASKS":
             return {...state, [action.todoListId]: action.tasks}
-                default:
+        case "CLEAR-TODOLIST-DATA":
+            return {}
+        default:
             return state
     }
 };
