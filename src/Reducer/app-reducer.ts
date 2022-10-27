@@ -7,7 +7,7 @@ import axios from "axios";
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 const initialState = {
-    status: 'idle' as RequestStatusType,
+    status: 'loading' as RequestStatusType,
     error: null as string | null,
     isInitialized: false as boolean
 }
@@ -22,7 +22,6 @@ export const appReducer = (state: InitialStateType = initialState, action: AppAc
             return {...state, error: action.error}
         case "APP/SET-Initialized":
             return {...state, isInitialized: action.value}
-
         default:
             return state
     }
@@ -42,7 +41,7 @@ export const setIsInitializedAC = (value: boolean) => ({
     type: 'APP/SET-Initialized',
     value
 } as const)
-//==============================TC============================
+//==============================TC async await============================
 
 export const initializeAppTC = (): AppThunk => async dispatch => {
     try {
@@ -50,7 +49,7 @@ export const initializeAppTC = (): AppThunk => async dispatch => {
         if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC(true));
         } else {
-            /*handleServerAppError(res.data, dispatch)*/
+            handleServerAppError(res.data, dispatch)
             dispatch(setIsLoggedInAC(false))
         }
     } catch (err) {

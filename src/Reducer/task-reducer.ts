@@ -106,7 +106,6 @@ export const setTaskAC = (tasks: Array<TaskType>, todoListId: string) => ({
 
 export const setTasksTC = (todolistId: string): AppThunk =>
     async dispatch => {
-
         try {
             dispatch(setAppStatusAC("loading"))
             const res = await todolistAPI.getTasks(todolistId)
@@ -174,7 +173,7 @@ export const updateTaskStatusTC = (taskId: string, todolistId: string, status: T
             if (!!task) {
                 const res = await todolistAPI.updateTask(todolistId, taskId, {
                     title: task.title,
-                    status: status,
+                    status,
                     deadline: task.deadline,
                     description: task.description,
                     priority: task.priority,

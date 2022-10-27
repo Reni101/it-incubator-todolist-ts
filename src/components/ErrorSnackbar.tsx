@@ -20,7 +20,7 @@ export const ErrorSnackbar = () => {
         dispatch(setAppErrorAC(null))
     }
     return (
-        <Snackbar open={error !== null} autoHideDuration={6000} onClose={handleClose}>
+        <Snackbar open={!!error} autoHideDuration={6000} onClose={handleClose}>
             <Alert onClose={handleClose} severity='error' sx={{width: '100%'}}>
                 {error}
             </Alert>

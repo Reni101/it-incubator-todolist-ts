@@ -1,4 +1,4 @@
-import React, {memo, useCallback, useEffect} from 'react';
+import React, {memo, useCallback} from 'react';
 import {AddItemForm} from "../../../components/AddItemForm";
 import {EditableSpan} from "../../../components/EditableSpan";
 import {Button, IconButton} from "@mui/material";
@@ -7,8 +7,7 @@ import Task from "./Task/Task";
 import {TaskStatuses, TaskType} from "../../../api/todolists-api";
 import {FilterValuesType} from "../../../Reducer/todolists-reducer";
 
-import {setTasksTC} from "../../../Reducer/task-reducer";
-import {useAppDispatch} from "../../../hooks/hooks";
+
 import {RequestStatusType} from "../../../Reducer/app-reducer";
 
 type TodoListPropsType = {

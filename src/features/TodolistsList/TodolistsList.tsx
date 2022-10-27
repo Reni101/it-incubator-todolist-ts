@@ -17,14 +17,14 @@ import {TaskStatuses} from "../../api/todolists-api";
 import {Navigate} from "react-router-dom";
 
 
-export const TodolistsList = ()  => {
+export const TodolistsList = () => {
     const todoLists: Array<TodolistDomainType> = useAppSelector(state => state.todolists)
     const task: TasksType = useAppSelector(state => state.task)
     const dispatch = useAppDispatch()
     const isloggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
     useEffect(() => {
-        if(!isloggedIn){
+        if (!isloggedIn) {
             return;
         }
         dispatch(setTodoListTC())

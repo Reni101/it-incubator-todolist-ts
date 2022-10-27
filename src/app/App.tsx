@@ -40,7 +40,6 @@ export const App = () => {
                     <Route path="/404" element={<h1>404: PAGE NOT FOUND</h1>}/>
                     <Route path="*" element={<Navigate to='/404'/>}/>
                 </Routes>
-
             </Container>
             <ErrorSnackbar/>
         </div>
