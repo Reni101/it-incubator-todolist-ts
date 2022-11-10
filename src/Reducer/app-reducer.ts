@@ -2,7 +2,7 @@ import {AppThunk} from "./store";
 import {authAPI} from "../api/todolists-api";
 import {setIsLoggedInAC} from "./authReducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -44,6 +44,7 @@ export const setIsInitializedAC = (value: boolean) => ({
 //==============================TC async await============================
 
 export const initializeAppTC = (): AppThunk => async dispatch => {
+
     try {
         const res = await authAPI.me()
         if (res.data.resultCode === 0) {
@@ -52,11 +53,12 @@ export const initializeAppTC = (): AppThunk => async dispatch => {
             handleServerAppError(res.data, dispatch)
             dispatch(setIsLoggedInAC(false))
         }
-    } catch (err) {
+    } catch (e) {
+        const err = e as Error | AxiosError
         if (axios.isAxiosError(err)) {
-            handleServerNetworkError(err, dispatch)
-        } else {
-            console.error(err)
+            const error = err.response?.data
+                ? (err.response.data as { error: string }).error : err.message
+            handleServerNetworkError(error, dispatch)
         }
     } finally {
         dispatch(setIsInitializedAC(true))

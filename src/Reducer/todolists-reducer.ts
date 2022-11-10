@@ -1,7 +1,7 @@
 import {todolistAPI, TodolistType} from "../api/todolists-api";
 import {AppThunk} from "./store";
 import {RequestStatusType, setAppStatusAC} from "./app-reducer";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 import {setTasksTC} from "./task-reducer";
 
@@ -102,11 +102,12 @@ export const setTodoListTC = (): AppThunk => async dispatch => {
         res.data.forEach(tl => {
             dispatch(setTasksTC(tl.id))
         })
-    } catch (err) {
+    } catch (e) {
+        const err = e as Error | AxiosError
         if (axios.isAxiosError(err)) {
-            handleServerNetworkError(err, dispatch)
-        } else {
-            console.error(err)
+            const error = err.response?.data
+                ? (err.response.data as { error: string }).error : err.message
+            handleServerNetworkError(error, dispatch)
         }
     }
 
@@ -124,11 +125,12 @@ export const addTodoListTC = (title: string): AppThunk => async dispatch => {
             handleServerAppError(res.data, dispatch)
         }
 
-    } catch (err) {
+    } catch (e) {
+        const err = e as Error | AxiosError
         if (axios.isAxiosError(err)) {
-            handleServerNetworkError(err, dispatch)
-        } else {
-            console.error(err)
+            const error = err.response?.data
+                ? (err.response.data as { error: string }).error : err.message
+            handleServerNetworkError(error, dispatch)
         }
     }
 
@@ -147,11 +149,12 @@ export const removeTodoListTC = (todoListID: string): AppThunk =>
                 handleServerAppError(res.data, dispatch)
             }
 
-        } catch (err) {
+        } catch (e) {
+            const err = e as Error | AxiosError
             if (axios.isAxiosError(err)) {
-                handleServerNetworkError(err, dispatch)
-            } else {
-                console.error(err)
+                const error = err.response?.data
+                    ? (err.response.data as { error: string }).error : err.message
+                handleServerNetworkError(error, dispatch)
             }
         }
 
@@ -168,11 +171,12 @@ export const editTitleTodoListTC = (todoListID: string, title: string): AppThunk
                 handleServerAppError(res.data, dispatch)
             }
 
-        } catch (err) {
+        } catch (e) {
+            const err = e as Error | AxiosError
             if (axios.isAxiosError(err)) {
-                handleServerNetworkError(err, dispatch)
-            } else {
-                console.error(err)
+                const error = err.response?.data
+                    ? (err.response.data as { error: string }).error : err.message
+                handleServerNetworkError(error, dispatch)
             }
         }
     }

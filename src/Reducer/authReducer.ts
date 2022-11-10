@@ -1,7 +1,7 @@
 import {AppThunk} from "./store";
 import {setAppStatusAC} from "./app-reducer";
 import {authAPI, LoginParamsType} from "../api/todolists-api";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 import {clearTodosDataAC} from "./todolists-reducer";
 
@@ -27,9 +27,8 @@ export const setIsLoggedInAC = (value: boolean) =>
 //===============================TC===================================
 
 export const loginTC = (data: LoginParamsType): AppThunk => async dispatch => {
-
+    dispatch(setAppStatusAC('loading'))
     try {
-        dispatch(setAppStatusAC('loading'))
         const res = await authAPI.login(data)
         if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC(true))
@@ -37,18 +36,20 @@ export const loginTC = (data: LoginParamsType): AppThunk => async dispatch => {
         } else {
             handleServerAppError(res.data, dispatch)
         }
-    } catch (err) {
+    } catch (e) {
+        const err = e as Error | AxiosError
         if (axios.isAxiosError(err)) {
-            handleServerNetworkError(err, dispatch)
-        } else {
-            console.error(err)
+            const error = err.response?.data
+                ? (err.response.data as { error: string }).error : err.message
+            handleServerNetworkError(error, dispatch)
         }
     }
 }
 
 export const logoutTC = (): AppThunk => async dispatch => {
+    dispatch(setAppStatusAC('loading'))
     try {
-        dispatch(setAppStatusAC('loading'))
+
         const res = await authAPI.logout()
         if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC(false))
@@ -57,11 +58,12 @@ export const logoutTC = (): AppThunk => async dispatch => {
         } else {
             handleServerAppError(res.data, dispatch)
         }
-    } catch (err) {
+    } catch (e) {
+        const err = e as Error | AxiosError
         if (axios.isAxiosError(err)) {
-            handleServerNetworkError(err, dispatch)
-        } else {
-            console.error(err)
+            const error = err.response?.data
+                ? (err.response.data as { error: string }).error : err.message
+            handleServerNetworkError(error, dispatch)
         }
     }
 

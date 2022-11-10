@@ -8,15 +8,16 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {useAppDispatch, useAppSelector} from "../hooks/hooks";
 import {logoutTC} from "../Reducer/authReducer";
+import {useCallback} from "react";
 
 export const ButtonAppBar = () => {
     const dispatch = useAppDispatch()
     const isloggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
 
-    const logoutHandler = () => {
+    const logoutHandler = useCallback(() => {
         dispatch(logoutTC())
-    }
+    }, [])
 
 
     return (

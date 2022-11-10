@@ -19,7 +19,7 @@ export const App = () => {
 
     useEffect(() => {
         dispatch(initializeAppTC())
-    }, [dispatch])
+    }, [])
 
     if (!isInitialized) {
         return <div
@@ -37,7 +37,7 @@ export const App = () => {
                 <Routes>
                     <Route path='/' element={<TodolistsList/>}/>
                     <Route path='login' element={<Login/>}/>
-                    <Route path="/404" element={<h1>404: PAGE NOT FOUND</h1>}/>
+                    <Route path="/404" element={<h1 style={{textAlign:"center"}}>404: PAGE NOT FOUND</h1>}/>
                     <Route path="*" element={<Navigate to='/404'/>}/>
                 </Routes>
             </Container>

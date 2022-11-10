@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 
 const instane = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -69,8 +69,8 @@ export type GetTaskResponseType = {
 export type LoginParamsType = {
     email: string
     password: string
-    rememberMe?: boolean
-    captcha?: boolean
+    rememberMe: boolean
+    captcha?: string
 }
 
 
@@ -104,13 +104,14 @@ export const todolistAPI = {
 
 export const authAPI = {
     login(data: LoginParamsType) {
-        return instane.post<ResponseType<{ userId: number }>>("/auth/login", data)
+        return instane.post<LoginParamsType, AxiosResponse<ResponseType<{ userId: number }>>>("/auth/login", data)
     },
     logout() {
         return instane.delete<ResponseType>("/auth/login")
     },
 
     me() {
-        return instane.get<ResponseType<{ id: string, email: string, login: string }>>("/auth/me")
+        return instane.get< ResponseType<{ id: string, email: string, login: string }>>("/auth/me")
     },
 }
+

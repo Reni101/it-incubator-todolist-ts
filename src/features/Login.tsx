@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import Grid from '@mui/material/Grid';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
@@ -34,7 +34,7 @@ export const Login = () => {
             password: "",
             rememberMe: false,
         },
-        validate: (values) => {
+        validate: (values:FormikErrorType) => {
             const errors: FormikErrorType = {}
             if (!values.email) {
                 errors.email = 'Required';
