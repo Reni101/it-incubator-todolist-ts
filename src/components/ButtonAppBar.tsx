@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {useAppDispatch, useAppSelector} from "../hooks/hooks";
-import {logoutTC} from "../Reducer/authReducer";
+import {logoutTC} from "../Reducer/auth-reducer";
 import {useCallback} from "react";
 
 export const ButtonAppBar = () => {

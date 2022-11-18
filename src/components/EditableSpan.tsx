@@ -12,8 +12,6 @@ type EditableSpanPropsType = {
 export const EditableSpan = (props: EditableSpanPropsType) => {
     const [error, setError] = useState<boolean>(false)
     const [newTitle, setNewTitle] = useState<string>(props.title)
-
-
     const [edit, setEdit] = useState(false)
 
 
