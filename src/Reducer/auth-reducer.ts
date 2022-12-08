@@ -68,7 +68,3 @@ export const logoutTC = () => async  (dispatch:AppDispatch) => {
     }
 
 }
-
-
-// export type AuthActionsType =
-//     | ReturnType<typeof setIsLoggedInAC>

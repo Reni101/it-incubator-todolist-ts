@@ -13,8 +13,6 @@ const initialState = {
     isInitialized: false as boolean
 }
 
-
-
 const slice = createSlice({
     name: "appReducer",
     initialState: initialState,
@@ -59,9 +57,3 @@ export const initializeAppTC = () => async (dispatch: AppDispatch) => {
 
 
 }
-//
-
-// export type AppActionsType =
-//     | ReturnType<typeof setAppStatusAC>
-//     | ReturnType<typeof setAppErrorAC>
-//     | ReturnType<typeof setIsInitializedAC>

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     addTaskAC,
     changeTaskStatusAC,
@@ -64,8 +63,7 @@ beforeEach(() => {
 
 test('correct task should be deleted from correct array', () => {
 
-
-    const action = removeTaskAC('2', 'todolistId2')
+    const action = removeTaskAC({taskId:"2",todolistId:'todolistId2'})
 
     const endState = tasksReducer(startState, action)
 
@@ -110,12 +108,12 @@ test('correct task should be deleted from correct array', () => {
 test('correct task should be added to correct array', () => {
 
 
-    const action = addTaskAC({
-        id: "3", title: "juce", status: TaskStatuses.New,
-        todoListId: 'todolistId2', startDate: "string",
-        order: 0, addedDate: "string", description: "string",
-        deadline: "string", priority: 0
-    })
+    const action = addTaskAC({task:{
+            id: "3", title: "juce", status: TaskStatuses.New,
+            todoListId: 'todolistId2', startDate: "string",
+            order: 0, addedDate: "string", description: "string",
+            deadline: "string", priority: 0
+        }})
 
     const endState = tasksReducer(startState, action)
 
@@ -128,9 +126,7 @@ test('correct task should be added to correct array', () => {
 
 test('status of specified task should be changed', () => {
 
-
-    const action = changeTaskStatusAC('2', TaskStatuses.New, 'todolistId2')
-
+    const action = changeTaskStatusAC({status:TaskStatuses.New,taskId:"2",todolistId:"todolistId2"})
     const endState = tasksReducer(startState, action)
 
     expect(endState['todolistId2'][1].status).toBe(TaskStatuses.New)
@@ -139,9 +135,7 @@ test('status of specified task should be changed', () => {
 
 test('title of specified task should be changed', () => {
 
-
-    const action = changeTaskTitleAC('2', "bread", 'todolistId2')
-
+    const action = changeTaskTitleAC({title:"bread",taskId:"2",todolistId:"todolistId2"})
     const endState = tasksReducer(startState, action)
 
     expect(endState['todolistId2'][1].title).toBe("bread")

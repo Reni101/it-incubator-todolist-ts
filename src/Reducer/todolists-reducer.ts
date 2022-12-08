@@ -39,6 +39,7 @@ const slice = createSlice({
             state[index].title = action.payload.title
         },
         changeFilterAC(state, action: PayloadAction<{ id: string, filter: FilterValuesType }>) {
+            debugger
             const index = state.findIndex(el => el.id === action.payload.id)
             state[index].filter = action.payload.filter
         },
@@ -47,9 +48,8 @@ const slice = createSlice({
             state[index].entityStatus = action.payload.status
 
         },
-        clearTodosDataAC(state, action: PayloadAction) {
+        clearTodosDataAC(state) {
             state = []
-
         },
     }
 
