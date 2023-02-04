@@ -39,14 +39,12 @@ const slice = createSlice({
             state[index].title = action.payload.title
         },
         changeFilterAC(state, action: PayloadAction<{ id: string, filter: FilterValuesType }>) {
-            debugger
             const index = state.findIndex(el => el.id === action.payload.id)
             state[index].filter = action.payload.filter
         },
         changeTodolistEntityStatusAC(state, action: PayloadAction<{ todolistId: string, status: RequestStatusType }>) {
             const index = state.findIndex(el => el.id === action.payload.todolistId)
             state[index].entityStatus = action.payload.status
-
         },
         clearTodosDataAC(state) {
             state = []
