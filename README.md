@@ -19,31 +19,6 @@ To get started with the Todo Lists React app, follow these steps:
  git clone https://github.com/Reni101/it-incubator-todolist-ts.git
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Available Scripts
 
 In the project directory, you can run:
