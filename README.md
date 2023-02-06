@@ -12,6 +12,7 @@ Simple and user-friendly interface
 
 # Getting Started
 To get started with the Todo Lists React app, follow these steps:
+
 1.Clone the repository:
 
 ```
