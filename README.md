@@ -1,4 +1,5 @@
-Todo Lists React is a simple to-do list app built with React.js. The app allows you to create and manage a list of tasks that need to be done. You can add, edit, mark as complete, and delete tasks from the list.
+#Todo Lists React
+Simple to-do list app built with React.js. The app allows you to create and manage a list of tasks that need to be done. You can add, edit, mark as complete, and delete tasks from the list.
 
 Features
 Add tasks
