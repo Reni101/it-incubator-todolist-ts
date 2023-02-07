@@ -1,7 +1,7 @@
 import {todolistAPI, TodolistType} from "../api/todolists-api";
 import {AppDispatch} from "./store";
 import {RequestStatusType, setAppStatusAC} from "./app-reducer";
-import axios, {AxiosError} from "axios";
+import {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 import {setTasksTC} from "./task-reducer";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
@@ -71,11 +71,7 @@ export const setTodoListTC = () => async (dispatch: AppDispatch) => {
         })
     } catch (e) {
         const err = e as Error | AxiosError
-        if (axios.isAxiosError(err)) {
-            const error = err.response?.data
-                ? (err.response.data as { error: string }).error : err.message
-            handleServerNetworkError(error, dispatch)
-        }
+        handleServerNetworkError(err, dispatch)
     }
 
 }
@@ -94,11 +90,7 @@ export const addTodoListTC = (title: string) => async (dispatch: AppDispatch) =>
 
     } catch (e) {
         const err = e as Error | AxiosError
-        if (axios.isAxiosError(err)) {
-            const error = err.response?.data
-                ? (err.response.data as { error: string }).error : err.message
-            handleServerNetworkError(error, dispatch)
-        }
+        handleServerNetworkError(err, dispatch)
     }
 
 
@@ -117,11 +109,7 @@ export const removeTodoListTC = (todoListID: string) => async (dispatch: AppDisp
 
     } catch (e) {
         const err = e as Error | AxiosError
-        if (axios.isAxiosError(err)) {
-            const error = err.response?.data
-                ? (err.response.data as { error: string }).error : err.message
-            handleServerNetworkError(error, dispatch)
-        }
+        handleServerNetworkError(err, dispatch)
     }
 
 }
@@ -139,11 +127,7 @@ export const editTitleTodoListTC = (todoListID: string, title: string) =>
 
         } catch (e) {
             const err = e as Error | AxiosError
-            if (axios.isAxiosError(err)) {
-                const error = err.response?.data
-                    ? (err.response.data as { error: string }).error : err.message
-                handleServerNetworkError(error, dispatch)
-            }
+            handleServerNetworkError(err, dispatch)
         }
     }
 

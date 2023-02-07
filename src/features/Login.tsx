@@ -13,7 +13,6 @@ import {loginTC} from "../Reducer/auth-reducer";
 import {Navigate} from "react-router-dom";
 
 
-
 type FormikErrorType = {
     email?: string
     password?: string
@@ -34,7 +33,7 @@ export const Login = () => {
             password: "",
             rememberMe: false,
         },
-        validate: (values:FormikErrorType) => {
+        validate: (values: FormikErrorType) => {
             const errors: FormikErrorType = {}
             if (!values.email) {
                 errors.email = 'Required';
@@ -50,8 +49,8 @@ export const Login = () => {
             }
             return errors
         },
-        onSubmit: values => {
-            dispatch(loginTC(values))
+        onSubmit: async (values) => {
+            await dispatch(loginTC(values))
             formik.resetForm()
 
         },

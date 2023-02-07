@@ -1,5 +1,5 @@
 import {TaskStatuses, TaskType, todolistAPI} from "../api/todolists-api";
-import axios, {AxiosError} from 'axios';
+import {AxiosError} from 'axios';
 
 import {AppDispatch, AppRootStateType} from "./store";
 import {setAppStatusAC} from "./app-reducer";
@@ -12,12 +12,9 @@ export type TasksType = {
     [key: string]: Array<TaskType>
 }
 
-const initialState: TasksType = {}
-
-
 const slice = createSlice({
     name: "tasksReducer",
-    initialState: initialState,
+    initialState: {} as TasksType,
     reducers: {
         removeTaskAC(state, action: PayloadAction<{ taskId: string, todolistId: string }>) {
             const tasks = state[action.payload.todolistId]
@@ -37,9 +34,10 @@ const slice = createSlice({
             const index = tasks.findIndex(el => el.id === action.payload.taskId)
             if (index > -1) tasks[index] = {...tasks[index], title: action.payload.title}
         },
-        setTaskAC(state, action: PayloadAction<{ tasks: Array<TaskType>, todoListId: string }>) {
-            state[action.payload.todoListId] = action.payload.tasks
+        setTaskAC(state, action: PayloadAction<{ tasks: TaskType[], todolistId: string }>) {
+            state[action.payload.todolistId] = action.payload.tasks
         },
+
     },
     extraReducers: (builder) => {
         builder.addCase(addTodoListAC, (state, action) => {
@@ -69,16 +67,13 @@ export const setTasksTC = (todolistId: string) =>
         try {
             dispatch(setAppStatusAC({status: "loading"}))
             const res = await todolistAPI.getTasks(todolistId)
-            dispatch(setTaskAC({tasks: res.data.items, todoListId: todolistId}))
+            dispatch(setTaskAC({tasks: res.data.items, todolistId}))
             dispatch(setAppStatusAC({status: 'succeeded'}))
 
         } catch (e) {
             const err = e as Error | AxiosError
-            if (axios.isAxiosError(err)) {
-                const error = err.response?.data
-                    ? (err.response.data as { error: string }).error : err.message
-                handleServerNetworkError(error, dispatch)
-            }
+            handleServerNetworkError(err, dispatch)
+
         }
     }
 
@@ -96,11 +91,7 @@ export const removeTaskTC = (todolistId: string, taskId: string) =>
 
         } catch (e) {
             const err = e as Error | AxiosError
-            if (axios.isAxiosError(err)) {
-                const error = err.response?.data
-                    ? (err.response.data as { error: string }).error : err.message
-                handleServerNetworkError(error, dispatch)
-            }
+            handleServerNetworkError(err, dispatch)
         }
     }
 
@@ -118,11 +109,7 @@ export const addTaskTC = (todolistId: string, title: string) =>
             }
         } catch (e) {
             const err = e as Error | AxiosError
-            if (axios.isAxiosError(err)) {
-                const error = err.response?.data
-                    ? (err.response.data as { error: string }).error : err.message
-                handleServerNetworkError(error, dispatch)
-            }
+            handleServerNetworkError(err, dispatch)
 
         }
     }
@@ -143,7 +130,7 @@ export const updateTaskStatusTC = (taskId: string, todolistId: string, status: T
                 })
                 if (res.data.resultCode === 0) {
 
-                    dispatch(changeTaskStatusAC({status,taskId,todolistId}))
+                    dispatch(changeTaskStatusAC({status, taskId, todolistId}))
                     dispatch(setAppStatusAC({status: 'succeeded'}))
                 } else {
                     handleServerAppError(res.data, dispatch)
@@ -152,11 +139,7 @@ export const updateTaskStatusTC = (taskId: string, todolistId: string, status: T
             }
         } catch (e) {
             const err = e as Error | AxiosError
-            if (axios.isAxiosError(err)) {
-                const error = err.response?.data
-                    ? (err.response.data as { error: string }).error : err.message
-                handleServerNetworkError(error, dispatch)
-            }
+            handleServerNetworkError(err, dispatch)
         }
     }
 
@@ -185,10 +168,6 @@ export const updateTaskTitleTC = (taskId: string, todolistId: string, title: str
             }
         } catch (e) {
             const err = e as Error | AxiosError
-            if (axios.isAxiosError(err)) {
-                const error = err.response?.data
-                    ? (err.response.data as { error: string }).error : err.message
-                handleServerNetworkError(error, dispatch)
-            }
+            handleServerNetworkError(err, dispatch)
         }
     }

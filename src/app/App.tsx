@@ -30,7 +30,6 @@ export const App = () => {
 
     return (
         <div className="App">
-
             <ButtonAppBar/>
             {status === 'loading' && < LinearProgress color="secondary"/>}
             <Container fixed>
