@@ -8,14 +8,15 @@ import {
   handleServerNetworkError,
 } from "../utils/error-utils";
 import { todolistActions } from "./todolists-reducer";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { clearState } from "../common/actions/common.actions";
+import { createAppAsyncThunk } from "../utils/create-app-async-thunk";
 
 export type TasksType = {
-  [key: string]: Array<TaskType>;
+  [key: string]: TaskType[];
 };
 
-const getTasksTC = createAsyncThunk(
+const getTasksTC = createAppAsyncThunk(
   "tasksReducer/setTasksTC",
   async (todolistId: string, { dispatch, rejectWithValue }) => {
     try {
@@ -30,7 +31,7 @@ const getTasksTC = createAsyncThunk(
   }
 );
 
-const removeTaskTC = createAsyncThunk(
+const removeTaskTC = createAppAsyncThunk(
   "tasksReducer/removeTaskTC",
   async (
     params: { todolistId: string; taskId: string },
@@ -115,22 +116,6 @@ const slice = createSlice({
 export const tasksReducer = slice.reducer;
 export const tasksActions = slice.actions;
 export const tasksThunks = { getTasksTC, removeTaskTC };
-
-// export const removeTaskTC =
-//   (todolistId: string, taskId: string) => async (dispatch: AppDispatch) => {
-//     try {
-//       dispatch(setAppStatusAC({ status: "loading" }));
-//       const res = await todolistAPI.deleteTask(todolistId, taskId);
-//       if (res.data.resultCode === 0) {
-//         dispatch(tasksActions.removeTaskAC({ taskId, todolistId }));
-//         dispatch(setAppStatusAC({ status: "succeeded" }));
-//       } else {
-//         handleServerAppError(res.data, dispatch);
-//       }
-//     } catch (e) {
-//       handleServerNetworkError(e as Error | AxiosError, dispatch);
-//     }
-//   };
 
 export const addTaskTC =
   (todolistId: string, title: string) => async (dispatch: AppDispatch) => {

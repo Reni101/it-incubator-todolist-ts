@@ -47,7 +47,6 @@
     "test:integration": "start-server-and-test storybook http-get://localhost:9009 jest:integration"
   },
   "eslintConfig": {
-    "extends": "react-app",
     "overrides": [
       {
         "files": [
