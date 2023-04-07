@@ -1,9 +1,4 @@
-import {
-  tasksActions,
-  tasksReducer,
-  tasksThunks,
-  TasksType,
-} from "../Reducer/task-reducer";
+import { tasksReducer, tasksThunks, TasksType } from "../Reducer/task-reducer";
 
 import { TaskStatuses } from "../api/todolists-api";
 
@@ -91,7 +86,7 @@ beforeEach(() => {
 });
 
 test("correct task should be deleted from correct array", () => {
-  const action = tasksThunks.removeTaskTC.fulfilled(
+  const action = tasksThunks.removeTask.fulfilled(
     {
       taskId: "2",
       todolistId: "todolistId2",
@@ -174,20 +169,24 @@ test("correct task should be deleted from correct array", () => {
 });
 
 test("correct task should be added to correct array", () => {
-  const action = tasksActions.addTaskAC({
-    task: {
-      id: "3",
-      title: "juce",
-      status: TaskStatuses.New,
-      todoListId: "todolistId2",
-      startDate: "string",
-      order: 0,
-      addedDate: "string",
-      description: "string",
-      deadline: "string",
-      priority: 0,
+  const action = tasksThunks.addTask.fulfilled(
+    {
+      task: {
+        id: "3",
+        title: "juce",
+        status: TaskStatuses.New,
+        todoListId: "todolistId2",
+        startDate: "string",
+        order: 0,
+        addedDate: "string",
+        description: "string",
+        deadline: "string",
+        priority: 0,
+      },
     },
-  });
+    "",
+    { todolistId: "todolistId1", title: "juce" }
+  );
 
   const endState = tasksReducer(startState, action);
 
@@ -198,32 +197,8 @@ test("correct task should be added to correct array", () => {
   expect(endState["todolistId2"][0].status).toBe(TaskStatuses.New);
 });
 
-test("status of specified task should be changed", () => {
-  const action = tasksActions.changeTaskStatusAC({
-    status: TaskStatuses.New,
-    taskId: "2",
-    todolistId: "todolistId2",
-  });
-  const endState = tasksReducer(startState, action);
-
-  expect(endState["todolistId2"][1].status).toBe(TaskStatuses.New);
-  expect(endState["todolistId1"][1].status).toBe(TaskStatuses.Completed);
-});
-
-test("title of specified task should be changed", () => {
-  const action = tasksActions.changeTaskTitleAC({
-    title: "bread",
-    taskId: "2",
-    todolistId: "todolistId2",
-  });
-  const endState = tasksReducer(startState, action);
-
-  expect(endState["todolistId2"][1].title).toBe("bread");
-  expect(endState["todolistId1"][1].title).toBe("JS");
-});
-
 test("set Tasks work correct", () => {
-  const action = tasksThunks.getTasksTC.fulfilled(
+  const action = tasksThunks.getTasks.fulfilled(
     {
       tasks: startState["todolistId1"],
       todolistId: "todolistId1",

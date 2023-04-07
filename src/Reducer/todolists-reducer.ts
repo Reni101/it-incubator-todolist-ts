@@ -91,7 +91,7 @@ export const setTodoListTC = () => async (dispatch: AppDispatch) => {
     dispatch(todolistActions.setTodoListAC({ todoLists: res.data }));
     dispatch(setAppStatusAC({ status: "succeeded" }));
     res.data.forEach((tl) => {
-      dispatch(tasksThunks.getTasksTC(tl.id));
+      dispatch(tasksThunks.getTasks(tl.id));
     });
   } catch (e) {
     const err = e as Error | AxiosError;

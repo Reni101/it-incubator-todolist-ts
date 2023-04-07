@@ -13,13 +13,7 @@ import {
 import { AddItemForm } from "../../components/AddItemForm";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 
-import {
-  addTaskTC,
-  tasksThunks,
-  TasksType,
-  updateTaskStatusTC,
-  updateTaskTitleTC,
-} from "../../Reducer/task-reducer";
+import { tasksThunks, TasksType } from "../../Reducer/task-reducer";
 import { TaskStatuses } from "../../api/todolists-api";
 import { Navigate } from "react-router-dom";
 
@@ -40,7 +34,7 @@ export const TodolistsList = () => {
 
   const removeTask = useCallback(
     (todolistId: string, taskId: string) => {
-      dispatch(tasksThunks.removeTaskTC({ todolistId, taskId }));
+      dispatch(tasksThunks.removeTask({ todolistId, taskId }));
     },
     [dispatch]
   );
@@ -53,15 +47,17 @@ export const TodolistsList = () => {
   );
 
   const addTask = useCallback(
-    (todoListId: string, title: string) => {
-      dispatch(addTaskTC(todoListId, title));
+    (todolistId: string, title: string) => {
+      dispatch(tasksThunks.addTask({ todolistId, title }));
     },
     [dispatch]
   );
 
   const changeTaskStatus = useCallback(
-    (todoListID: string, tasksID: string, status: TaskStatuses) => {
-      dispatch(updateTaskStatusTC(tasksID, todoListID, status));
+    (todolistId: string, taskId: string, status: TaskStatuses) => {
+      dispatch(
+        tasksThunks.updateTask({ taskId, todolistId, model: { status } })
+      );
     },
     [dispatch]
   );
@@ -87,8 +83,14 @@ export const TodolistsList = () => {
   );
 
   const editTask = useCallback(
-    (toDoListID: string, taskId: string, newTitle: string) => {
-      dispatch(updateTaskTitleTC(taskId, toDoListID, newTitle));
+    (todolistId: string, taskId: string, newTitle: string) => {
+      dispatch(
+        tasksThunks.updateTask({
+          taskId,
+          todolistId,
+          model: { title: newTitle },
+        })
+      );
     },
     [dispatch]
   );
