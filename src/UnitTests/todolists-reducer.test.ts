@@ -39,7 +39,7 @@ beforeEach(() => {
 test("correct todolist should be removed", () => {
   const endState = todoListsReducer(
     startState,
-    todolistThunk.removeTodoListTC.fulfilled({ id: todolistId1 }, "", "")
+    todolistThunk.removeTodoList.fulfilled({ id: todolistId1 }, "", "")
   );
 
   expect(endState.length).toBe(1);
@@ -51,7 +51,7 @@ test("correct todolist should change its name", () => {
 
   const endState = todoListsReducer(
     startState,
-    todolistThunk.editTitleTodoListTC.fulfilled(
+    todolistThunk.editTitleTodoList.fulfilled(
       {
         title: newTodolistTitle,
         id: todolistId2,

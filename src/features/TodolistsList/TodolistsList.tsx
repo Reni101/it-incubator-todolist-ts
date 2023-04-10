@@ -26,7 +26,7 @@ export const TodolistsList = () => {
     if (!isloggedIn) {
       return;
     }
-    dispatch(todolistThunk.getTodoListTC());
+    dispatch(todolistThunk.getTodoList());
   }, [dispatch]);
 
   const removeTask = useCallback(
@@ -61,13 +61,13 @@ export const TodolistsList = () => {
 
   const removeTodolist = useCallback(
     (todoListID: string) => {
-      dispatch(todolistThunk.removeTodoListTC(todoListID));
+      dispatch(todolistThunk.removeTodoList(todoListID));
     },
     [dispatch]
   );
   const addTodoList = useCallback(
     (title: string) => {
-      dispatch(todolistThunk.addTodoListTC(title));
+      dispatch(todolistThunk.addTodoList(title));
     },
     [dispatch]
   );
@@ -75,7 +75,7 @@ export const TodolistsList = () => {
   const editTodolist = useCallback(
     (todolistId: string, newTitle: string) => {
       dispatch(
-        todolistThunk.editTitleTodoListTC({ title: newTitle, todolistId })
+        todolistThunk.editTitleTodoList({ title: newTitle, todolistId })
       );
     },
     [dispatch]

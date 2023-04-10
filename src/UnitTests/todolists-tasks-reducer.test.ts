@@ -83,7 +83,7 @@ test("property with todolistId should be deleted", () => {
     ],
   };
 
-  const action = todolistThunk.removeTodoListTC.fulfilled(
+  const action = todolistThunk.removeTodoList.fulfilled(
     { id: "todolistId2" },
     "",
     "todolistId2"
