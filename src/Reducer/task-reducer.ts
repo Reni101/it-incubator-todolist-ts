@@ -4,7 +4,7 @@ import {
   handleServerAppError,
   handleServerNetworkError,
 } from "../utils/error-utils";
-import { todolistActions } from "./todolists-reducer";
+import { todolistActions, todolistThunk } from "./todolists-reducer";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { clearState } from "../common/actions/common.actions";
 import { createAppAsyncThunk } from "../utils/create-app-async-thunk";
@@ -15,7 +15,7 @@ export type TasksType = {
   [key: string]: TaskType[];
 };
 
-const getTasks = createAppAsyncThunk(
+const getTasks = createAsyncThunk(
   "tasksReducer/setTasksTC",
   async (todolistId: string, { dispatch, rejectWithValue }) => {
     try {
@@ -103,6 +103,7 @@ const addTask = createAsyncThunk(
         param.title
       );
       if (res.data.resultCode === ResultCode.success) {
+        dispatch(appActions.setAppStatusAC({ status: "succeeded" }));
         return { task: res.data.data.item };
       } else {
         handleServerAppError(res.data, dispatch);
@@ -120,13 +121,13 @@ const slice = createSlice({
   initialState: {} as TasksType,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(todolistActions.addTodoListAC, (state, action) => {
+    builder.addCase(todolistThunk.addTodoListTC.fulfilled, (state, action) => {
       state[action.payload.newTodolist.id] = [];
     });
     builder.addCase(todolistActions.removeTodolistAC, (state, action) => {
       delete state[action.payload.id];
     });
-    builder.addCase(todolistActions.setTodoListAC, (state, action) => {
+    builder.addCase(todolistThunk.getTodoListTC.fulfilled, (state, action) => {
       action.payload.todoLists.forEach((tl) => (state[tl.id] = []));
     });
     builder.addCase(getTasks.fulfilled, (state, action) => {

@@ -2,13 +2,12 @@ import React, { useCallback, useEffect } from "react";
 import { Grid, Paper } from "@mui/material";
 import { TodoList } from "./Todolist/TodoList";
 import {
-  addTodoListTC,
   editTitleTodoListTC,
   FilterValuesType,
   removeTodoListTC,
-  getTodoListTC,
   todolistActions,
   TodolistDomainType,
+  todolistThunk,
 } from "../../Reducer/todolists-reducer";
 import { AddItemForm } from "../../components/AddItemForm";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
@@ -29,7 +28,7 @@ export const TodolistsList = () => {
     if (!isloggedIn) {
       return;
     }
-    dispatch(getTodoListTC());
+    dispatch(todolistThunk.getTodoListTC());
   }, [dispatch]);
 
   const removeTask = useCallback(
@@ -70,7 +69,7 @@ export const TodolistsList = () => {
   );
   const addTodoList = useCallback(
     (title: string) => {
-      dispatch(addTodoListTC(title));
+      dispatch(todolistThunk.addTodoListTC(title));
     },
     [dispatch]
   );
