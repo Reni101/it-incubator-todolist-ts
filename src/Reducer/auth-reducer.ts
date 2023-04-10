@@ -1,4 +1,3 @@
-import { AppDispatch } from "./store";
 import { setAppStatusAC } from "./app-reducer";
 import { authAPI, LoginParamsType } from "../api/todolists-api";
 import { AxiosError } from "axios";
@@ -6,8 +5,52 @@ import {
   handleServerAppError,
   handleServerNetworkError,
 } from "../utils/error-utils";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { clearState } from "../common/actions/common.actions";
+import { ResultCode } from "../enums/ResulCode";
+
+const loginTC = createAsyncThunk(
+  "authReducer/loginTC",
+  async (params: LoginParamsType, { dispatch, rejectWithValue }) => {
+    try {
+      dispatch(setAppStatusAC({ status: "loading" }));
+      const res = await authAPI.login(params);
+      if (res.data.resultCode === 0) {
+        dispatch(authActions.setIsLoggedInAC({ value: true }));
+        dispatch(setAppStatusAC({ status: "succeeded" }));
+        return;
+      } else {
+        handleServerAppError(res.data, dispatch);
+        return rejectWithValue(null);
+      }
+    } catch (e) {
+      handleServerNetworkError(e as Error | AxiosError, dispatch);
+      return rejectWithValue(e);
+    }
+  }
+);
+
+const logoutTC = createAsyncThunk(
+  "authReducer/logoutTC",
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      dispatch(setAppStatusAC({ status: "loading" }));
+      const res = await authAPI.logout();
+      if (res.data.resultCode === ResultCode.success) {
+        dispatch(authActions.setIsLoggedInAC({ value: false }));
+        dispatch(clearState());
+        dispatch(setAppStatusAC({ status: "succeeded" }));
+        return;
+      } else {
+        handleServerAppError(res.data, dispatch);
+        return rejectWithValue(null);
+      }
+    } catch (e) {
+      handleServerNetworkError(e as Error | AxiosError, dispatch);
+      return rejectWithValue(e);
+    }
+  }
+);
 
 const slice = createSlice({
   name: "authReducer",
@@ -20,38 +63,5 @@ const slice = createSlice({
 });
 
 export const authReducer = slice.reducer;
-export const { setIsLoggedInAC } = slice.actions;
-
-//===============================TC===================================
-
-export const loginTC =
-  (data: LoginParamsType) => async (dispatch: AppDispatch) => {
-    dispatch(setAppStatusAC({ status: "loading" }));
-    try {
-      const res = await authAPI.login(data);
-      if (res.data.resultCode === 0) {
-        dispatch(setIsLoggedInAC({ value: true }));
-        dispatch(setAppStatusAC({ status: "succeeded" }));
-      } else {
-        handleServerAppError(res.data, dispatch);
-      }
-    } catch (e) {
-      handleServerNetworkError(e as Error | AxiosError, dispatch);
-    }
-  };
-export const logoutTC = () => async (dispatch: AppDispatch) => {
-  dispatch(setAppStatusAC({ status: "loading" }));
-  try {
-    const res = await authAPI.logout();
-    if (res.data.resultCode === 0) {
-      dispatch(setIsLoggedInAC({ value: false }));
-      dispatch(clearState());
-      dispatch(setAppStatusAC({ status: "succeeded" }));
-    } else {
-      handleServerAppError(res.data, dispatch);
-    }
-  } catch (e) {
-    const err = e as Error | AxiosError;
-    handleServerNetworkError(err, dispatch);
-  }
-};
+export const authActions = slice.actions;
+export const authThunk = { loginTC, logoutTC };
