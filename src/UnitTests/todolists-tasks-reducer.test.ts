@@ -1,7 +1,7 @@
 import { tasksReducer, TasksType } from "../Reducer/task-reducer";
 
 import { TaskStatuses } from "../api/todolists-api";
-import { todolistActions } from "../Reducer/todolists-reducer";
+import { todolistThunk } from "../Reducer/todolists-reducer";
 
 test("property with todolistId should be deleted", () => {
   const startState: TasksType = {
@@ -83,7 +83,11 @@ test("property with todolistId should be deleted", () => {
     ],
   };
 
-  const action = todolistActions.removeTodolistAC({ id: "todolistId2" });
+  const action = todolistThunk.removeTodoListTC.fulfilled(
+    { id: "todolistId2" },
+    "",
+    "todolistId2"
+  );
 
   const endState = tasksReducer(startState, action);
 

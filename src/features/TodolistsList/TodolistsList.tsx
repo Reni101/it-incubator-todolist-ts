@@ -2,9 +2,7 @@ import React, { useCallback, useEffect } from "react";
 import { Grid, Paper } from "@mui/material";
 import { TodoList } from "./Todolist/TodoList";
 import {
-  editTitleTodoListTC,
   FilterValuesType,
-  removeTodoListTC,
   todolistActions,
   TodolistDomainType,
   todolistThunk,
@@ -63,7 +61,7 @@ export const TodolistsList = () => {
 
   const removeTodolist = useCallback(
     (todoListID: string) => {
-      dispatch(removeTodoListTC(todoListID));
+      dispatch(todolistThunk.removeTodoListTC(todoListID));
     },
     [dispatch]
   );
@@ -75,8 +73,10 @@ export const TodolistsList = () => {
   );
 
   const editTodolist = useCallback(
-    (toDoListID: string, newTitle: string) => {
-      dispatch(editTitleTodoListTC(toDoListID, newTitle));
+    (todolistId: string, newTitle: string) => {
+      dispatch(
+        todolistThunk.editTitleTodoListTC({ title: newTitle, todolistId })
+      );
     },
     [dispatch]
   );

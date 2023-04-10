@@ -4,6 +4,7 @@ import {
   todolistActions,
   TodolistDomainType,
   todoListsReducer,
+  todolistThunk,
 } from "../Reducer/todolists-reducer";
 
 let todolistId1: string;
@@ -38,7 +39,7 @@ beforeEach(() => {
 test("correct todolist should be removed", () => {
   const endState = todoListsReducer(
     startState,
-    todolistActions.removeTodolistAC({ id: todolistId1 })
+    todolistThunk.removeTodoListTC.fulfilled({ id: todolistId1 }, "", "")
   );
 
   expect(endState.length).toBe(1);
@@ -50,10 +51,17 @@ test("correct todolist should change its name", () => {
 
   const endState = todoListsReducer(
     startState,
-    todolistActions.changeTodoListTitleAC({
-      title: newTodolistTitle,
-      id: todolistId2,
-    })
+    todolistThunk.editTitleTodoListTC.fulfilled(
+      {
+        title: newTodolistTitle,
+        id: todolistId2,
+      },
+      "",
+      {
+        title: newTodolistTitle,
+        todolistId: todolistId2,
+      }
+    )
   );
 
   expect(endState[0].title).toBe("What to learn");
