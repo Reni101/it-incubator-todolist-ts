@@ -84,7 +84,7 @@ export const todolistActions = slice.actions;
 
 //=======================Thunk async await =========================
 
-export const setTodoListTC = () => async (dispatch: AppDispatch) => {
+export const getTodoListTC = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(setAppStatusAC({ status: "loading" }));
     const res = await todolistAPI.getTodolists();

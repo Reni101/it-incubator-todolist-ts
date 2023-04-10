@@ -9,6 +9,7 @@ import { todolistActions } from "./todolists-reducer";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { clearState } from "../common/actions/common.actions";
 import { createAppAsyncThunk } from "../utils/create-app-async-thunk";
+import { ResultCode } from "../enums/ResulCode";
 
 export type TasksType = {
   [key: string]: TaskType[];
@@ -39,7 +40,7 @@ const removeTask = createAppAsyncThunk(
     try {
       dispatch(setAppStatusAC({ status: "loading" }));
       const res = await todolistAPI.deleteTask(todolistId, taskId);
-      if (res.data.resultCode === 0) {
+      if (res.data.resultCode === ResultCode.success) {
         dispatch(setAppStatusAC({ status: "succeeded" }));
         return { taskId, todolistId };
       } else {
@@ -75,7 +76,7 @@ const updateTask = createAppAsyncThunk(
         param.taskId,
         apiModel
       );
-      if (res.data.resultCode === 0) {
+      if (res.data.resultCode === ResultCode.success) {
         dispatch(setAppStatusAC({ status: "succeeded" }));
         return res.data.data.item;
       } else {
@@ -101,7 +102,7 @@ const addTask = createAsyncThunk(
         param.todolistId,
         param.title
       );
-      if (res.data.resultCode === 0) {
+      if (res.data.resultCode === ResultCode.success) {
         dispatch(setAppStatusAC({ status: "succeeded" }));
         return { task: res.data.data.item };
       } else {
@@ -154,21 +155,4 @@ const slice = createSlice({
 });
 
 export const tasksReducer = slice.reducer;
-export const tasksActions = slice.actions;
 export const tasksThunks = { getTasks, removeTask, updateTask, addTask };
-
-// export const addTaskTC =
-//   (todolistId: string, title: string) => async (dispatch: AppDispatch) => {
-//     try {
-//       dispatch(setAppStatusAC({ status: "loading" }));
-//       const res = await todolistAPI.addTaskForTodolist(todolistId, title);
-//       if (res.data.resultCode === 0) {
-//         dispatch(tasksActions.addTaskAC({ task: res.data.data.item }));
-//         dispatch(setAppStatusAC({ status: "succeeded" }));
-//       } else {
-//         handleServerAppError(res.data, dispatch);
-//       }
-//     } catch (e) {
-//       handleServerNetworkError(e as Error | AxiosError, dispatch);
-//     }
-//   };

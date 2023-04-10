@@ -6,7 +6,7 @@ import {
   editTitleTodoListTC,
   FilterValuesType,
   removeTodoListTC,
-  setTodoListTC,
+  getTodoListTC,
   todolistActions,
   TodolistDomainType,
 } from "../../Reducer/todolists-reducer";
@@ -29,7 +29,7 @@ export const TodolistsList = () => {
     if (!isloggedIn) {
       return;
     }
-    dispatch(setTodoListTC());
+    dispatch(getTodoListTC());
   }, [dispatch]);
 
   const removeTask = useCallback(
