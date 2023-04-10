@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { ResponseType } from "../api/todolists-api";
-import { setAppErrorAC, setAppStatusAC } from "../Reducer/app-reducer";
+import { appActions } from "../Reducer/app-reducer";
 import axios, { AxiosError } from "axios";
 
 // generic function
@@ -9,11 +9,11 @@ export const handleServerAppError = <T>(
   dispatch: Dispatch
 ) => {
   if (data.messages.length) {
-    dispatch(setAppErrorAC({ error: data.messages[0] }));
+    dispatch(appActions.setAppErrorAC({ error: data.messages[0] }));
   } else {
-    dispatch(setAppErrorAC({ error: "Some error occurred" }));
+    dispatch(appActions.setAppErrorAC({ error: "Some error occurred" }));
   }
-  dispatch(setAppStatusAC({ status: "failed" }));
+  dispatch(appActions.setAppStatusAC({ status: "failed" }));
 };
 
 export const handleServerNetworkError = (
@@ -24,9 +24,11 @@ export const handleServerNetworkError = (
     const error = err.response?.data
       ? (err.response.data as { error: string }).error
       : err.message;
-    dispatch(setAppErrorAC({ error }));
+    dispatch(appActions.setAppErrorAC({ error }));
   } else {
-    dispatch(setAppErrorAC({ error: `Native error ${err.message}` }));
+    dispatch(
+      appActions.setAppErrorAC({ error: `Native error ${err.message}` })
+    );
   }
-  dispatch(setAppStatusAC({ status: "failed" }));
+  dispatch(appActions.setAppStatusAC({ status: "failed" }));
 };

@@ -1,4 +1,3 @@
-import { setAppStatusAC } from "./app-reducer";
 import { authAPI, LoginParamsType } from "../api/todolists-api";
 import { AxiosError } from "axios";
 import {
@@ -8,16 +7,17 @@ import {
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { clearState } from "../common/actions/common.actions";
 import { ResultCode } from "../enums/ResulCode";
+import { appActions } from "./app-reducer";
 
 const loginTC = createAsyncThunk(
   "authReducer/loginTC",
   async (params: LoginParamsType, { dispatch, rejectWithValue }) => {
     try {
-      dispatch(setAppStatusAC({ status: "loading" }));
+      dispatch(appActions.setAppStatusAC({ status: "loading" }));
       const res = await authAPI.login(params);
       if (res.data.resultCode === 0) {
         dispatch(authActions.setIsLoggedInAC({ value: true }));
-        dispatch(setAppStatusAC({ status: "succeeded" }));
+        dispatch(appActions.setAppStatusAC({ status: "succeeded" }));
         return;
       } else {
         handleServerAppError(res.data, dispatch);
@@ -34,12 +34,12 @@ const logoutTC = createAsyncThunk(
   "authReducer/logoutTC",
   async (_, { dispatch, rejectWithValue }) => {
     try {
-      dispatch(setAppStatusAC({ status: "loading" }));
+      dispatch(appActions.setAppStatusAC({ status: "loading" }));
       const res = await authAPI.logout();
       if (res.data.resultCode === ResultCode.success) {
         dispatch(authActions.setIsLoggedInAC({ value: false }));
         dispatch(clearState());
-        dispatch(setAppStatusAC({ status: "succeeded" }));
+        dispatch(appActions.setAppStatusAC({ status: "succeeded" }));
         return;
       } else {
         handleServerAppError(res.data, dispatch);
