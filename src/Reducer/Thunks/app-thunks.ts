@@ -11,7 +11,7 @@ export const initializeApp = createAsyncThunk(
   async (_, { dispatch, rejectWithValue }) => {
     try {
       const res = await authAPI.me();
-      if (res.data.resultCode === ResultCode.success) {
+      if (res.resultCode === ResultCode.success) {
         dispatch(authActions.setIsLoggedInAC({ value: true }));
       } else {
         dispatch(appActions.setAppStatusAC({ status: "failed" }));

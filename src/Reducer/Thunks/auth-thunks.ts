@@ -16,12 +16,12 @@ export const login = createAsyncThunk(
     try {
       dispatch(appActions.setAppStatusAC({ status: "loading" }));
       const res = await authAPI.login(params);
-      if (res.data.resultCode === 0) {
+      if (res.resultCode === 0) {
         dispatch(authActions.setIsLoggedInAC({ value: true }));
         dispatch(appActions.setAppStatusAC({ status: "succeeded" }));
         return;
       } else {
-        handleServerAppError(res.data, dispatch);
+        handleServerAppError(res, dispatch);
         return rejectWithValue(null);
       }
     } catch (e) {
@@ -37,13 +37,13 @@ export const logout = createAsyncThunk(
     try {
       dispatch(appActions.setAppStatusAC({ status: "loading" }));
       const res = await authAPI.logout();
-      if (res.data.resultCode === ResultCode.success) {
+      if (res.resultCode === ResultCode.success) {
         dispatch(authActions.setIsLoggedInAC({ value: false }));
         dispatch(clearState());
         dispatch(appActions.setAppStatusAC({ status: "succeeded" }));
         return;
       } else {
-        handleServerAppError(res.data, dispatch);
+        handleServerAppError(res, dispatch);
         return rejectWithValue(null);
       }
     } catch (e) {

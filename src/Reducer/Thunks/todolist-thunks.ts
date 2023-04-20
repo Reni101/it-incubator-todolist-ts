@@ -1,13 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { appActions } from "../app-reducer";
-import { todolistAPI } from "../../api/todolists-api";
+import { todolistAPI } from "api/todolists-api";
 import { tasksThunks } from "../task-reducer";
 import {
   handleServerAppError,
   handleServerNetworkError,
-} from "../../utils/error-utils";
+} from "utils/error-utils";
 import { AxiosError } from "axios";
-import { ResultCode } from "../../enums/ResulCode";
+import { ResultCode } from "enums/ResulCode";
 import { todolistActions } from "../todolists-reducer";
 
 export const getTodoList = createAsyncThunk(
@@ -15,7 +15,7 @@ export const getTodoList = createAsyncThunk(
   async (_, { dispatch, rejectWithValue }) => {
     try {
       dispatch(appActions.setAppStatusAC({ status: "loading" }));
-      const res = await todolistAPI.getTodolists();
+      const res = await todolistAPI.getTodoLists();
 
       res.data.forEach((tl) => {
         dispatch(tasksThunks.getTasks(tl.id));

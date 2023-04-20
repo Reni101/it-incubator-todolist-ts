@@ -1,7 +1,7 @@
 import { instance } from "./baseURL";
 
 export const todolistAPI = {
-  getTodolists() {
+  getTodoLists() {
     return instance.get<TodolistType[]>("todo-lists");
   },
   createTodolist(title: string) {
