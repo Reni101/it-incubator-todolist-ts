@@ -1,14 +1,13 @@
-import { TaskType } from "api/todolists-api";
-
+import { TaskType } from "../api/todolists-api";
+import { todolistThunk } from "./todolists-reducer";
 import { createSlice } from "@reduxjs/toolkit";
-import { clearState } from "common/actions/common.actions";
-import { todolistThunk } from "reducer/todolists-reducer";
+import { clearState } from "../common/actions/common.actions";
 import {
   addTask,
   getTasks,
   removeTask,
   updateTask,
-} from "reducer/Thunks/task-thunks";
+} from "./Thunks/task-thunks";
 
 export type TasksType = {
   [key: string]: TaskType[];

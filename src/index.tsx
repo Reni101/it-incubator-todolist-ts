@@ -1,14 +1,14 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
-import "./index.css";
-import * as serviceWorker from "./serviceWorker";
-import { Provider } from "react-redux";
-import { store } from "reducer/store";
-import { App } from "app/App";
-import { HashRouter } from "react-router-dom";
+import React from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import * as serviceWorker from './serviceWorker'
+import { Provider } from 'react-redux'
+import { store } from './Reducer/store'
+import { App } from './app/App'
+import { HashRouter } from 'react-router-dom'
 
-const container = document.getElementById("root");
-const root = createRoot(container!);
+const container = document.getElementById('root')
+const root = createRoot(container!)
 
 root.render(
   <Provider store={store}>
@@ -16,6 +16,6 @@ root.render(
       <App />
     </HashRouter>
   </Provider>
-);
+)
 
-serviceWorker.unregister();
+serviceWorker.unregister()

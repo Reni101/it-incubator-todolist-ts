@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import "./App.css";
 
-import { ButtonAppBar } from "components/ButtonAppBar";
+import { ButtonAppBar } from "../components/ButtonAppBar";
 import { CircularProgress, Container } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import LinearProgress from "@mui/material/LinearProgress";
-import { appThunk, RequestStatusType } from "reducer/app-reducer";
-import { ErrorSnackbar } from "components/ErrorSnackbar";
-import { TodolistsList } from "features/TodolistsList/TodolistsList";
-import { Login } from "features/Login";
+import { appThunk, RequestStatusType } from "../Reducer/app-reducer";
+import { ErrorSnackbar } from "../components/ErrorSnackbar";
+import { TodolistsList } from "../features/TodolistsList/TodolistsList";
+import { Login } from "../features/Login";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 export const App = () => {

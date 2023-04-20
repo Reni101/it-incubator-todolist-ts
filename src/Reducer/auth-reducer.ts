@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { login, logout } from "reducer/Thunks/auth-thunks";
+import { login, logout } from "./Thunks/auth-thunks";
 
 const slice = createSlice({
   name: "authReducer",

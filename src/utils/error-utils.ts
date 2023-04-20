@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
-import { ResponseType } from "api/todolists-api";
-import { appActions } from "reducer/app-reducer";
+import { ResponseType } from "../api/todolists-api";
+import { appActions } from "../Reducer/app-reducer";
 import axios, { AxiosError } from "axios";
 
 // generic function

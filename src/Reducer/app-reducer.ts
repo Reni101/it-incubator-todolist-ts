@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { initializeApp } from "reducer/Thunks/app-thunks";
+import { initializeApp } from "./Thunks/app-thunks";
 
 export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed";
 
