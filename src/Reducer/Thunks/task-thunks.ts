@@ -1,13 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { appActions } from "../app-reducer";
-import { modelType, todolistAPI } from "../../api/todolists-api";
+import { modelType, todolistAPI } from "api/todolists-api";
 import {
   handleServerAppError,
   handleServerNetworkError,
-} from "../../utils/error-utils";
+} from "utils/error-utils";
 import { AxiosError } from "axios";
-import { createAppAsyncThunk } from "../../utils/create-app-async-thunk";
-import { ResultCode } from "../../enums/ResulCode";
+import { createAppAsyncThunk } from "utils/create-app-async-thunk";
+import { ResultCode } from "enums/ResulCode";
 
 export const getTasks = createAsyncThunk(
   "tasksReducer/setTasksTC",
