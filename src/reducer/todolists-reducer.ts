@@ -1,13 +1,13 @@
-import { TodolistType } from "../api/todolists-api";
-import { RequestStatusType } from "./app-reducer";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { clearState } from "../common/actions/common.actions";
+import { clearState } from "common/actions/common.actions";
+import { RequestStatusType } from "reducer/app-reducer";
 import {
   addTodoList,
   editTitleTodoList,
   getTodoList,
   removeTodoList,
-} from "./Thunks/todolist-thunks";
+} from "reducer/Thunks/todolist-thunks";
+import { TodolistType } from "api/todolists-api";
 
 export type FilterValuesType = "all" | "active" | "completed";
 

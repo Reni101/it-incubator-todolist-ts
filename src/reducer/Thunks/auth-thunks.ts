@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { appActions } from "../app-reducer";
+
 import {
   handleServerAppError,
   handleServerNetworkError,
@@ -9,6 +9,7 @@ import { ResultCode } from "enums/ResulCode";
 import { clearState } from "common/actions/common.actions";
 import { authActions } from "../auth-reducer";
 import { authAPI, LoginParamsType } from "api/auth-api";
+import { appActions } from "reducer/app-reducer";
 
 export const login = createAsyncThunk(
   "authReducer/loginTC",
