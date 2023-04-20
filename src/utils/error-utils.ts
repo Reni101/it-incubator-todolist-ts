@@ -21,10 +21,8 @@ export const handleServerAppError = <T>(
  * @param err
  * @param dispatch
  */
-export const handleServerNetworkError = (
-  err: Error | AxiosError,
-  dispatch: Dispatch
-) => {
+export const handleServerNetworkError = (e: unknown, dispatch: Dispatch) => {
+  const err = e as Error | AxiosError;
   if (axios.isAxiosError(err)) {
     const error = err.response?.data
       ? (err.response.data as { error: string }).error
