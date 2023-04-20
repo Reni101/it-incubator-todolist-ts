@@ -16,7 +16,7 @@ export const ButtonAppBar = () => {
   const isloggedIn = useAppSelector((state) => state.auth.isLoggedIn);
 
   const logoutHandler = useCallback(() => {
-    dispatch(authThunk.logoutTC());
+    dispatch(authThunk.logout());
   }, []);
 
   return (

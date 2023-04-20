@@ -1,35 +1,7 @@
-import { authAPI } from "../api/todolists-api";
-
-import {
-  handleServerAppError,
-  handleServerNetworkError,
-} from "../utils/error-utils";
-import { AxiosError } from "axios";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { authActions } from "./auth-reducer";
-import { ResultCode } from "../enums/ResulCode";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { initializeApp } from "./Thunks/app-thunks";
 
 export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed";
-
-const initializeAppTC = createAsyncThunk(
-  "appReducer/initializeAppTC",
-  async (_, { dispatch, rejectWithValue }) => {
-    try {
-      const res = await authAPI.me();
-      if (res.data.resultCode === ResultCode.success) {
-        dispatch(authActions.setIsLoggedInAC({ value: true }));
-      } else {
-        handleServerAppError(res.data, dispatch);
-        dispatch(authActions.setIsLoggedInAC({ value: false }));
-      }
-    } catch (e) {
-      handleServerNetworkError(e as Error | AxiosError, dispatch);
-      return rejectWithValue(e);
-    } finally {
-      dispatch(appActions.setIsInitializedAC({ value: true }));
-    }
-  }
-);
 
 const slice = createSlice({
   name: "appReducer",
@@ -56,4 +28,4 @@ const slice = createSlice({
 
 export const appReducer = slice.reducer;
 export const appActions = slice.actions;
-export const appThunk = { initializeAppTC };
+export const appThunk = { initializeApp };

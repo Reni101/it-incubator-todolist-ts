@@ -16,6 +16,11 @@ export const handleServerAppError = <T>(
   dispatch(appActions.setAppStatusAC({ status: "failed" }));
 };
 
+/**
+ * function to handle server error
+ * @param err
+ * @param dispatch
+ */
 export const handleServerNetworkError = (
   err: Error | AxiosError,
   dispatch: Dispatch

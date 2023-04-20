@@ -50,7 +50,7 @@ export const Login = () => {
       return errors;
     },
     onSubmit: async (values) => {
-      await dispatch(authThunk.loginTC(values));
+      await dispatch(authThunk.login(values));
       formik.resetForm();
     },
   });

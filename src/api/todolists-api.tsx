@@ -52,10 +52,15 @@ export type modelType = {
   deadline?: string;
 };
 
+type FieldErrorType = {
+  error: string;
+  field: string;
+};
+
 export type ResponseType<D = {}> = {
   resultCode: number;
   messages: Array<string>;
-  fieldsErrors: Array<string>;
+  fieldsErrors: FieldErrorType[];
   data: D;
 };
 

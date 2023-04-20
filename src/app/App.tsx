@@ -17,7 +17,7 @@ export const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(appThunk.initializeAppTC());
+    dispatch(appThunk.initializeApp());
   }, []);
 
   if (!isInitialized) {
