@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { authAPI } from "../../api/todolists-api";
-import { ResultCode } from "../../enums/ResulCode";
+import { ResultCode } from "enums/ResulCode";
 import { authActions } from "../auth-reducer";
-import { handleServerNetworkError } from "../../utils/error-utils";
+import { handleServerNetworkError } from "utils/error-utils";
 import { AxiosError } from "axios";
 import { appActions } from "../app-reducer";
+import { authAPI } from "api/auth-api";
 
 export const initializeApp = createAsyncThunk(
   "appReducer/initializeAppTC",
