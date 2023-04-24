@@ -49,7 +49,7 @@ export const removeTask = createAppAsyncThunk(
 );
 
 export const updateTask = createAppAsyncThunk(
-  "tasksReducer/v",
+  "tasksReducer/updateTask",
   async (
     param: { taskId: string; todolistId: string; model: modelType },
     { dispatch, rejectWithValue, getState }
